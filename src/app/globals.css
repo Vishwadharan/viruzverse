@@ -1,27 +1,128 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Brand tokens ─────────────────────────────── */
+@theme {
+  --color-bg:           #ffffff;
+  --color-bg-soft:      #faf9ff;
+  --color-bg-subtle:    #f3f0ff;
+
+  --color-brand:        #7c3aed;
+  --color-brand-2:      #6d28d9;
+  --color-brand-3:      #5b21b6;
+  --color-brand-light:  #ede9fe;
+  --color-brand-mid:    #ddd6fe;
+
+  --color-ink:          #0a0a0f;
+  --color-ink-2:        #1e1b2e;
+  --color-muted:        #6b7280;
+  --color-dim:          #9ca3af;
+
+  --color-line:         #e5e7eb;
+  --color-line-2:       #d1d5db;
+  --color-line-brand:   #c4b5fd;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base ─────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans, sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+
+  ::-webkit-scrollbar       { width: 5px; }
+  ::-webkit-scrollbar-track { background: #faf9ff; }
+  ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 99px; }
+}
+
+/* ── Glass ────────────────────────────────────── */
+.glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.9);
+}
+.glass-soft {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.75);
+}
+
+/* ── Scroll progress bar ─────────────────────── */
+.scroll-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  z-index: 9999;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  transform-origin: left;
+}
+
+/* ── Ripple ───────────────────────────────────── */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: ripple-anim 0.6s linear;
+  pointer-events: none;
+}
+@keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+/* ── Float ────────────────────────────────────── */
+@keyframes float  { 0%,100%{ transform:translateY(0) }  50%{ transform:translateY(-16px) } }
+@keyframes float2 { 0%,100%{ transform:translateY(0) }  40%{ transform:translateY(-10px) } }
+.float  { animation: float  7s ease-in-out infinite; }
+.float2 { animation: float2 9s ease-in-out infinite; }
+
+/* ── Grid dot pattern ────────────────────────── */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(124,58,237,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.028) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+/* Instant loader — visible before hydration */
+#__next_loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #ffffff;
+}
+
+/* Force consistent color rendering across all screens */
+html {
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Force sRGB color space */
+* {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+img, video {
+  color-profile: sRGB;
+}
+
+/* Glassmorphism support */
+@supports not (backdrop-filter: blur(1px)) {
+  header[role="banner"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
