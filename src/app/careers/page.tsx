@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function CareersPage() {
-  return (
+  return ( 
     <main>
       <CareersHero />
       <JobListings />
