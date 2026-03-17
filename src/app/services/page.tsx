@@ -1,156 +1,584 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
+"use client";
 
-export const metadata: Metadata = {
-  title: 'Services - Viruzverse',
-  description: 'AI Automation, CRM-ERP, Custom SaaS, EdTech & more',
+import { motion, AnimatePresence, type Transition } from "framer-motion";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import {
+  ArrowUpRight, Clock, Shield, Code2, Handshake,
+  Bot, Layers, Users, BookOpen, Puzzle, type LucideIcon,
+} from "lucide-react";
+import { SERVICES, type ServiceIconKey } from "@/lib/services";
+
+/* ── Constants ────────────────────────────────── */
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const TICK  = 3800; // ms per service
+
+const ICON_MAP: Record<ServiceIconKey, LucideIcon> = {
+  Bot, Layers, Users, BookOpen, Puzzle,
 };
 
-export default function ServicesPage() {
+const STEPS = [
+  { n: "01", icon: Clock,     title: "Scope call",     desc: "30-min call. No sales pitch. We understand your exact problem, stack, and timeline." },
+  { n: "02", icon: Shield,    title: "Fixed proposal", desc: "Milestone-based, fixed price. What you see is exactly what you pay. No surprises." },
+  { n: "03", icon: Code2,     title: "Build & ship",   desc: "Weekly staging drops, async updates. Zero black-box moments throughout." },
+  { n: "04", icon: Handshake, title: "Full handover",  desc: "Source code, docs, infra access. We train your team and stay reachable post-launch." },
+];
+
+function Sep() {
   return (
-    <main className="min-h-screen">
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-4 sm:px-8 lg:px-10 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
-        <div className="max-w-[1280px] mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-gray-900 via-purple-900 to-blue-900 bg-clip-text text-transparent mb-6">
-            Our Services
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Cutting-edge AI solutions across automation, enterprise systems, 
-            custom SaaS, and EdTech innovation.
-          </p>
+    <div className="absolute bottom-0 inset-x-0 h-px pointer-events-none"
+      style={{ background: "linear-gradient(90deg,transparent,#c4b5fd 40%,#7c3aed 50%,#c4b5fd 60%,transparent)" }}
+    />
+  );
+}
+
+/* ── Auto-cycling showcase ────────────────────── */
+function ServiceShowcase() {
+  const [active, setActive] = useState(0);
+  const [epoch,  setEpoch]  = useState(0);
+
+  const goTo = (i: number) => {
+    setActive(i);
+    setEpoch(e => e + 1);
+  };
+
+  /* reset timeout on every epoch change */
+  useEffect(() => {
+    const t = setTimeout(() => goTo((active + 1) % SERVICES.length), TICK);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [epoch]);
+
+  const s    = SERVICES[active];
+  const Icon = ICON_MAP[s.iconKey];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7, delay: 0.28, ease: EASE } satisfies Transition}
+      className="flex flex-col w-full rounded-3xl overflow-hidden"
+      style={{
+        background: "#0f0c1a",
+        boxShadow: "0 32px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(124,58,237,0.18)",
+      }}
+    >
+      {/* ── Chrome bar ── */}
+      <div
+        className="flex items-center justify-between px-5 py-3.5 shrink-0"
+        style={{ background: "#1a1625", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+      >
+        {/* Dots */}
+        <div className="flex items-center gap-1.5">
+          {["#ff5f57","#febc2e","#28c840"].map((c,i) => (
+            <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />
+          ))}
         </div>
-      </section>
 
-      {/* Services Grid */}
-      <section className="py-24 px-4 sm:px-8 lg:px-10">
-        <div className="max-w-[1280px] mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            {/* AI Automation */}
-            <Link href="/services/ai-automation" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-purple-600 transition-colors">
-                  AI Automation
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Intelligent process automation that works 24/7.
-                </p>
-              </div>
-            </Link>
+        {/* Service number tabs */}
+        <div className="flex items-center gap-0.5 p-1 rounded-xl"
+          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          {SERVICES.map((svc, i) => (
+            <button
+              key={svc.num}
+              onClick={() => goTo(i)}
+              className="w-8 h-7 rounded-lg text-[10px] font-mono font-bold transition-all duration-200"
+              style={{
+                background: i === active ? `${svc.color}28` : "transparent",
+                color:      i === active ? svc.color : "#374151",
+                border:     i === active ? `1px solid ${svc.color}30` : "1px solid transparent",
+              }}
+            >
+              {svc.num}
+            </button>
+          ))}
+        </div>
 
-            {/* CRM-ERP */}
-            <Link href="/services/crm-erp" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                  CRM & ERP
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Next-gen enterprise systems with AI insights.
-                </p>
-              </div>
-            </Link>
+        <span className="text-[10px] font-mono" style={{ color: "#374151" }}>
+          services.tsx
+        </span>
+      </div>
 
-            {/* Custom Projects */}
-            <Link href="/services/custom-projects" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-emerald-600 transition-colors">
-                  Custom Projects
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Bespoke AI solutions for unique challenges.
-                </p>
-              </div>
-            </Link>
+      {/* ── Content area ── */}
+      <div className="relative flex-1 overflow-hidden" style={{ minHeight: "260px" }}>
+        {/* Dynamic color orb */}
+        <motion.div
+          key={`orb-${active}`}
+          className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          style={{ background: `radial-gradient(circle,${s.color}18 0%,transparent 65%)` }}
+        />
 
-            {/* Custom SaaS */}
-            <Link href="/services/custom-saas" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition-colors">
-                  Custom SaaS
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Scalable SaaS platforms powered by AI.
-                </p>
-              </div>
-            </Link>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0,  filter: "blur(0px)" }}
+            exit={{  opacity: 0, y: -16, filter: "blur(4px)" }}
+            transition={{ duration: 0.32, ease: EASE } satisfies Transition}
+            className="relative z-10 p-6"
+          >
+            {/* Ghost number */}
+            <div
+              className="absolute -top-4 -right-2 font-black leading-none
+                         select-none pointer-events-none"
+              style={{
+                fontSize: "100px",
+                color: s.color,
+                opacity: 0.06,
+                letterSpacing: "-0.05em",
+              }}
+            >
+              {s.num}
+            </div>
 
-            {/* EdTech Solutions */}
-            <Link href="/services/edtech-solutions" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-green-600 transition-colors">
-                  EdTech Solutions
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  AI-powered learning & education platforms.
-                </p>
-              </div>
-            </Link>
+            {/* Icon */}
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+              style={{
+                background: `${s.color}18`,
+                border: `1.5px solid ${s.color}30`,
+                boxShadow: `0 8px 24px ${s.color}20`,
+              }}
+            >
+              <Icon size={26} style={{ color: s.color }} strokeWidth={1.6} />
+            </div>
 
-            {/* Terms of Service */}
-            <Link href="/services/terms-of-service" className="group">
-              <div className="bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-white/50 hover:border-purple-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                <div className="w-16 h-16 bg-gradient-to-r from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-gray-600 transition-colors">
-                  Terms of Service
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  Service agreements & legal documentation.
-                </p>
-              </div>
+            {/* Name */}
+            <h3
+              className="font-black tracking-[-0.02em] text-white mb-2 leading-tight"
+              style={{ fontSize: "clamp(20px,2.5vw,26px)" }}
+            >
+              {s.name}
+            </h3>
+
+            {/* Description */}
+            <p
+              className="text-[13px] leading-[1.85] mb-5"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              {s.desc}
+            </p>
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1.5 mb-6">
+              {s.tags.map(t => (
+                <span
+                  key={t}
+                  className="px-2.5 py-1 text-[11px] font-mono rounded-lg"
+                  style={{
+                    background: `${s.color}18`,
+                    color: s.color,
+                    border: `1px solid ${s.color}28`,
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            {/* Explore link */}
+            <Link
+              href={s.href}
+              className="group inline-flex items-center gap-1.5 text-[12px] font-semibold font-mono
+                         transition-opacity duration-200 hover:opacity-70"
+              style={{ color: s.color }}
+            >
+              Explore service
+              <ArrowUpRight size={13}
+                className="transition-transform duration-200
+                           group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </Link>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* ── Progress segments ── */}
+      <div
+        className="flex items-center gap-1.5 px-5 py-4 shrink-0"
+        style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      >
+        {SERVICES.map((svc, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className="relative flex-1 h-1 rounded-full overflow-hidden cursor-pointer"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          >
+            {i < active && (
+              <div className="absolute inset-0 rounded-full"
+                style={{ background: `${svc.color}60` }}
+              />
+            )}
+            {i === active && (
+              <motion.div
+                key={`prog-${epoch}`}
+                className="absolute inset-y-0 left-0 rounded-full"
+                style={{ background: svc.color }}
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: TICK / 1000, ease: "linear" } satisfies Transition}
+              />
+            )}
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+/* ══ Page ════════════════════════════════════════ */
+export default function ServicesPageContent() {
+  return (
+    <main style={{ backgroundColor: "#faf9ff" }}>
+
+      {/* ══ HERO ══ */}
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(124,58,237,0.032) 1px,transparent 1px)," +
+              "linear-gradient(90deg,rgba(124,58,237,0.032) 1px,transparent 1px)",
+            backgroundSize: "52px 52px",
+          }}
+        />
+        <div className="absolute -top-40 right-0 w-150 h-150 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(124,58,237,0.1) 0%,transparent 65%)" }}
+        />
+        <div className="absolute bottom-0 -left-20 w-125 h-125 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle,rgba(167,139,250,0.07) 0%,transparent 65%)" }}
+        />
+        <Sep />
+
+        <div className="relative z-10 max-w-300 mx-auto px-5 sm:px-8 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 lg:gap-16 items-center">
+
+            {/* Left */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, ease: EASE } satisfies Transition}
+                className="mb-7"
+              >
+                <span
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                             text-[11px] font-mono font-semibold uppercase tracking-[0.18em]"
+                  style={{
+                    color: "#7c3aed",
+                    background: "rgba(124,58,237,0.07)",
+                    border: "1px solid rgba(124,58,237,0.2)",
+                  }}
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
+                    <span className="relative flex h-2 w-2 rounded-full bg-violet-500" />
+                  </span>
+                  What we build
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.08, ease: EASE } satisfies Transition}
+                className="font-black tracking-[-0.04em] leading-[1.03] mb-6"
+                style={{ fontSize: "clamp(36px,5.5vw,68px)", color: "#0a0a0f" }}
+              >
+                Everything to ship
+                <br />
+                <span style={{
+                  backgroundImage: "linear-gradient(118deg,#7c3aed 10%,#a78bfa 55%,#c4b5fd)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
+                  great software.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.14, ease: EASE } satisfies Transition}
+                className="text-[16px] leading-[1.85] mb-8 max-w-lg"
+                style={{ color: "#6b7280" }}
+              >
+                Production-grade AI, SaaS, enterprise systems and education platforms.
+                Domain expertise comes standard — no generalists, no middlemen.
+              </motion.p>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.2, ease: EASE } satisfies Transition}
+                className="flex flex-wrap gap-3 mb-10"
+              >
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl
+                             text-[13px] font-bold text-white transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "linear-gradient(135deg,#7c3aed,#6d28d9)",
+                    boxShadow: "0 8px 28px rgba(124,58,237,0.4), inset 0 1px 0 rgba(255,255,255,0.15)",
+                  }}
+                >
+                  Get a free quote
+                  <ArrowUpRight size={15}
+                    className="transition-transform duration-300
+                               group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </Link>
+                <a
+                  href="#process"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl
+                             text-[13px] font-bold transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    color: "#374151",
+                    background: "rgba(255,255,255,0.8)",
+                    border: "1px solid rgba(255,255,255,0.95)",
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                  }}
+                >
+                  How we work
+                </a>
+              </motion.div>
+
+              {/* Trust strip */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 } satisfies Transition}
+                className="flex items-center gap-4 flex-wrap"
+              >
+                {["24h response", "Fixed pricing", "NDA available", "No lock-in"].map((t, i) => (
+                  <span key={t} className="flex items-center gap-1.5 text-[12px] font-mono"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    {i > 0 && <span style={{ color: "#e5e7eb" }}>·</span>}
+                    <span className="w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ background: "#10b981" }}
+                    />
+                    {t}
+                  </span>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Right — showcase */}
+            <ServiceShowcase />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-8 lg:px-10 bg-gradient-to-br from-purple-600 to-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Explore our services or book a free consultation.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="/contact" className="px-8 py-4 bg-white text-purple-600 text-lg font-bold rounded-2xl hover:bg-gray-50 hover:shadow-2xl hover:scale-105 transition-all duration-300 shadow-xl">
-              Book Consultation
-            </a>
-            <a href="/services/ai-automation" className="px-8 py-4 border-2 border-white/30 text-white text-lg font-bold rounded-2xl hover:bg-white/10 hover:scale-105 transition-all duration-300">
-              View All Services
-            </a>
+      {/* ══ PROCESS ══ */}
+      <section id="process" className="relative py-24 overflow-hidden"
+        style={{ background: "linear-gradient(160deg,#1e1b2e 0%,#0f0c1a 100%)" }}
+      >
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(167,139,250,0.04) 1px,transparent 1px)," +
+              "linear-gradient(90deg,rgba(167,139,250,0.04) 1px,transparent 1px)",
+            backgroundSize: "44px 44px",
+          }}
+        />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-60 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse,rgba(124,58,237,0.18) 0%,transparent 70%)" }}
+        />
+        <div className="absolute top-0 inset-x-0 h-px"
+          style={{ background: "linear-gradient(90deg,transparent,#c4b5fd 40%,#7c3aed 50%,#c4b5fd 60%,transparent)" }}
+        />
+        <Sep />
+
+        <div className="relative z-10 max-w-300 mx-auto px-5 sm:px-8 lg:px-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, ease: EASE } satisfies Transition}
+            className="text-center mb-16"
+          >
+            <p className="text-[11px] font-mono font-semibold uppercase tracking-[0.18em] mb-4"
+              style={{ color: "#a78bfa" }}>
+              Our process
+            </p>
+            <h2
+              className="font-black tracking-[-0.03em] leading-[1.05] text-white"
+              style={{ fontSize: "clamp(26px,4vw,50px)" }}
+            >
+              From idea to production,{" "}
+              <span style={{
+                backgroundImage: "linear-gradient(118deg,#a78bfa 10%,#c4b5fd 70%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}>
+                without the chaos.
+              </span>
+            </h2>
+          </motion.div>
+
+          <div className="relative">
+            <div className="absolute top-[46px] left-[calc(12.5%-1px)] right-[calc(12.5%-1px)]
+                           hidden lg:block pointer-events-none"
+              style={{ borderTop: "1.5px dashed rgba(124,58,237,0.2)" }}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {STEPS.map(({ n, icon: Icon, title, desc }, i) => (
+                <motion.div key={n}
+                  initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
+                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: EASE } satisfies Transition}
+                  className="group relative flex flex-col p-6 rounded-3xl"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <span className="absolute -top-3 -right-1 font-black leading-none
+                                  select-none pointer-events-none opacity-[0.055]"
+                    style={{ fontSize: "72px", color: "#a78bfa", letterSpacing: "-0.05em" }}
+                  >{n}</span>
+
+                  <div className="relative z-10 flex items-center justify-between mb-5">
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center
+                                   transition-transform duration-300 group-hover:scale-110"
+                      style={{ background: "rgba(124,58,237,0.18)", border: "1px solid rgba(124,58,237,0.28)" }}
+                    >
+                      <Icon size={18} style={{ color: "#a78bfa" }} strokeWidth={1.8} />
+                    </div>
+                    <span className="text-[11px] font-mono font-bold"
+                      style={{ color: "rgba(124,58,237,0.35)" }}>
+                      {n}
+                    </span>
+                  </div>
+
+                  <h3 className="relative z-10 text-[14px] font-bold mb-2 text-white">{title}</h3>
+                  <p className="relative z-10 text-[13px] leading-[1.75]"
+                    style={{ color: "rgba(255,255,255,0.38)" }}>
+                    {desc}
+                  </p>
+
+                  <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
+                                 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: "radial-gradient(ellipse at 0% 0%,rgba(124,58,237,0.1) 0%,transparent 65%)" }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 h-[1.5px] rounded-b-3xl
+                                 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: "linear-gradient(90deg,transparent,#a78bfa,transparent)" }}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* ══ CTA ══ */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="max-w-300 mx-auto px-5 sm:px-8 lg:px-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, ease: EASE } satisfies Transition}
+            className="relative rounded-3xl overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.82)",
+              border: "1px solid rgba(255,255,255,0.95)",
+              backdropFilter: "blur(20px)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,1)",
+            }}
+          >
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse at 30% 50%,rgba(124,58,237,0.07) 0%,transparent 60%)" }}
+            />
+            <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-3xl"
+              style={{ background: "linear-gradient(180deg,#7c3aed,#a78bfa,#7c3aed)" }}
+            />
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center
+                            justify-between gap-8 px-8 sm:px-12 py-12">
+              <div className="max-w-xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+                  style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}
+                >
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
+                    <span className="relative flex h-1.5 w-1.5 rounded-full bg-violet-500" />
+                  </span>
+                  <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.15em]"
+                    style={{ color: "#7c3aed" }}>
+                    Ready when you are
+                  </span>
+                </div>
+
+                <h2
+                  className="font-black tracking-[-0.03em] leading-[1.06] mb-3"
+                  style={{ fontSize: "clamp(22px,3vw,38px)", color: "#0a0a0f" }}
+                >
+                  Not sure which service
+                  <br />
+                  fits your{" "}
+                  <span style={{
+                    backgroundImage: "linear-gradient(118deg,#7c3aed 10%,#a78bfa 70%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}>
+                    needs?
+                  </span>
+                </h2>
+
+                <p className="text-[12px] font-mono" style={{ color: "rgba(107,114,128,0.8)" }}>
+                  24 hr response · NDA available · Fixed pricing · No lock-in
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <Link href="/about"
+                  className="inline-flex items-center justify-center px-5 py-3 rounded-2xl
+                             text-[13px] font-semibold transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    color: "#374151",
+                    background: "rgba(124,58,237,0.06)",
+                    border: "1px solid rgba(124,58,237,0.15)",
+                  }}
+                >
+                  About us
+                </Link>
+                <Link href="/contact"
+                  className="group inline-flex items-center justify-center gap-2 px-7 py-3 rounded-2xl
+                             text-[13px] font-bold text-white transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    background: "linear-gradient(135deg,#7c3aed,#6d28d9)",
+                    boxShadow: "0 8px 24px rgba(124,58,237,0.4), inset 0 1px 0 rgba(255,255,255,0.15)",
+                  }}
+                >
+                  Book a free call
+                  <ArrowUpRight size={14}
+                    className="transition-transform duration-300
+                               group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </main>
