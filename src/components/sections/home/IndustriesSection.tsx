@@ -1,11 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Transition, type Variants } from "framer-motion";
 import {
   Utensils, GraduationCap, Factory, HeartPulse,
   Building2, ShoppingBag, Briefcase, Truck, Landmark, Scale,
   type LucideIcon,
 } from "lucide-react";
+
+/* ── Type-safe ease tuple ─────────────────────── */
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 const ITEMS: {
   icon: LucideIcon;
@@ -15,58 +18,60 @@ const ITEMS: {
   grad: string;
   glow: string;
 }[] = [
-  { icon: Utensils,      name: "F&B",            sub: "Restaurants & Cafés",    color: "#f97316", grad: "from-orange-500/20 to-orange-400/5",   glow: "rgba(249,115,22,0.25)"   },
-  { icon: GraduationCap, name: "Edtech",          sub: "Education Platforms",    color: "#3b82f6", grad: "from-blue-500/20 to-blue-400/5",       glow: "rgba(59,130,246,0.25)"   },
-  { icon: Factory,       name: "Manufacturing",   sub: "Industrial Operations",  color: "#94a3b8", grad: "from-slate-400/20 to-slate-300/5",     glow: "rgba(148,163,184,0.25)"  },
-  { icon: HeartPulse,    name: "Healthcare",      sub: "Clinics & Hospitals",    color: "#ef4444", grad: "from-red-500/20 to-red-400/5",         glow: "rgba(239,68,68,0.25)"    },
-  { icon: Building2,     name: "Real Estate",     sub: "Property & Listings",    color: "#10b981", grad: "from-emerald-500/20 to-emerald-400/5", glow: "rgba(16,185,129,0.25)"   },
-  { icon: ShoppingBag,   name: "E-Commerce",      sub: "Retail & Marketplaces",  color: "#8b5cf6", grad: "from-violet-500/20 to-violet-400/5",   glow: "rgba(139,92,246,0.25)"   },
-  { icon: Briefcase,     name: "Professional",    sub: "Agencies & Consultants", color: "#7c3aed", grad: "from-purple-600/20 to-purple-400/5",   glow: "rgba(124,58,237,0.25)"   },
-  { icon: Truck,         name: "Logistics",       sub: "Supply Chain & Fleet",   color: "#f59e0b", grad: "from-amber-500/20 to-amber-400/5",     glow: "rgba(245,158,11,0.25)"   },
-  { icon: Landmark,      name: "Fintech",         sub: "Payments & Banking",     color: "#06b6d4", grad: "from-cyan-500/20 to-cyan-400/5",       glow: "rgba(6,182,212,0.25)"    },
-  { icon: Scale,         name: "LegalTech",       sub: "Law & Compliance",       color: "#6366f1", grad: "from-indigo-500/20 to-indigo-400/5",   glow: "rgba(99,102,241,0.25)"   },
+  { icon: Utensils,      name: "F&B",           sub: "Restaurants & Cafés",    color: "#f97316", grad: "from-orange-500/20 to-orange-400/5",   glow: "rgba(249,115,22,0.25)"  },
+  { icon: GraduationCap, name: "Edtech",         sub: "Education Platforms",    color: "#3b82f6", grad: "from-blue-500/20 to-blue-400/5",       glow: "rgba(59,130,246,0.25)"  },
+  { icon: Factory,       name: "Manufacturing",  sub: "Industrial Operations",  color: "#94a3b8", grad: "from-slate-400/20 to-slate-300/5",     glow: "rgba(148,163,184,0.25)" },
+  { icon: HeartPulse,    name: "Healthcare",     sub: "Clinics & Hospitals",    color: "#ef4444", grad: "from-red-500/20 to-red-400/5",         glow: "rgba(239,68,68,0.25)"   },
+  { icon: Building2,     name: "Real Estate",    sub: "Property & Listings",    color: "#10b981", grad: "from-emerald-500/20 to-emerald-400/5", glow: "rgba(16,185,129,0.25)"  },
+  { icon: ShoppingBag,   name: "E-Commerce",     sub: "Retail & Marketplaces",  color: "#8b5cf6", grad: "from-violet-500/20 to-violet-400/5",   glow: "rgba(139,92,246,0.25)"  },
+  { icon: Briefcase,     name: "Professional",   sub: "Agencies & Consultants", color: "#7c3aed", grad: "from-purple-600/20 to-purple-400/5",   glow: "rgba(124,58,237,0.25)"  },
+  { icon: Truck,         name: "Logistics",      sub: "Supply Chain & Fleet",   color: "#f59e0b", grad: "from-amber-500/20 to-amber-400/5",     glow: "rgba(245,158,11,0.25)"  },
+  { icon: Landmark,      name: "Fintech",        sub: "Payments & Banking",     color: "#06b6d4", grad: "from-cyan-500/20 to-cyan-400/5",       glow: "rgba(6,182,212,0.25)"   },
+  { icon: Scale,         name: "LegalTech",      sub: "Law & Compliance",       color: "#6366f1", grad: "from-indigo-500/20 to-indigo-400/5",   glow: "rgba(99,102,241,0.25)"  },
 ];
 
-const stagger = {
+/* ── Variants — typed explicitly to satisfy Framer ── */
+const stagger: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.065 } },
 };
-const item = {
+
+const cardVariant: Variants = {
   hidden:  { opacity: 0, y: 24, filter: "blur(6px)" },
-  visible: { opacity: 1, y: 0,  filter: "blur(0px)", transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1, y: 0, filter: "blur(0px)",
+    transition: { duration: 0.5, ease: EASE } satisfies Transition,
+  },
 };
 
 export default function IndustriesSection() {
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: "#faf9ff" }}>
 
-      {/* ── Background decoration ── */}
+      {/* ── Background ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Grid pattern */}
         <div className="absolute inset-0"
           style={{
             backgroundImage: "linear-gradient(rgba(124,58,237,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.035) 1px, transparent 1px)",
             backgroundSize: "48px 48px",
           }}
         />
-        {/* Orb left */}
-        <div className="absolute -bottom-20 -left-32 w-[600px] h-[500px] rounded-full"
+        <div className="absolute -bottom-20 -left-32 w-150 h-125 rounded-full"
           style={{ background: "radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 65%)" }}
         />
-        {/* Orb right */}
-        <div className="absolute -top-20 -right-32 w-[500px] h-[400px] rounded-full"
+        <div className="absolute -top-20 -right-32 w-125 h-100 rounded-full"
           style={{ background: "radial-gradient(ellipse, rgba(167,139,250,0.1) 0%, transparent 65%)" }}
         />
       </div>
 
       {/* Separators */}
-      {(["top-0","bottom-0"] as const).map((p) => (
+      {(["top-0", "bottom-0"] as const).map((p) => (
         <div key={p} className={`absolute ${p} inset-x-0 h-px`}
           style={{ background: "linear-gradient(90deg, transparent, #c4b5fd 40%, #7c3aed 50%, #c4b5fd 60%, transparent)" }}
         />
       ))}
 
-      <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
+      <div className="max-w-300 mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
 
         {/* ── Header ── */}
         <motion.div
@@ -74,9 +79,8 @@ export default function IndustriesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: EASE } satisfies Transition}
         >
-          {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
             style={{
               background: "rgba(124,58,237,0.07)",
@@ -108,7 +112,7 @@ export default function IndustriesSection() {
             </span>
           </h2>
 
-          <p className="max-w-[480px] mx-auto text-[15px] leading-[1.8]" style={{ color: "#6b7280" }}>
+          <p className="max-w-120 mx-auto text-[15px] leading-[1.8]" style={{ color: "#6b7280" }}>
             Production software across 10+ industries.
             Domain expertise comes standard — no onboarding required.
           </p>
@@ -127,7 +131,7 @@ export default function IndustriesSection() {
             return (
               <motion.div
                 key={ind.name}
-                variants={item}
+                variants={cardVariant}
                 whileHover={{ y: -6, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="group relative flex flex-col items-center text-center
@@ -152,13 +156,13 @@ export default function IndustriesSection() {
                   el.style.boxShadow = "0 2px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,1)";
                 }}
               >
-                {/* Gradient wash behind card on hover */}
+                {/* Gradient wash */}
                 <div
                   className={`absolute inset-0 opacity-0 group-hover:opacity-100
-                              transition-opacity duration-300 bg-gradient-to-b ${ind.grad}`}
+                              transition-opacity duration-300 bg-linear-to-b ${ind.grad}`}
                 />
 
-                {/* Icon ring */}
+                {/* Icon */}
                 <div
                   className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-3
                              shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-md"
@@ -172,11 +176,11 @@ export default function IndustriesSection() {
 
                 {/* Text */}
                 <p className="relative z-10 text-[13px] sm:text-[14px] font-semibold mb-1 leading-tight
-                              transition-colors duration-300 group-hover:text-[#0a0a0f]"
+                              transition-colors duration-300 group-hover:text-ink"
                   style={{ color: "#1e1b2e" }}>
                   {ind.name}
                 </p>
-                <p className="relative z-10 text-[11px] leading-tight transition-colors duration-300"
+                <p className="relative z-10 text-[11px] leading-tight"
                   style={{ color: "#9ca3af" }}>
                   {ind.sub}
                 </p>
@@ -191,12 +195,12 @@ export default function IndustriesSection() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.4, ease: EASE } satisfies Transition}
         >
           {[
-            { n: "10+", label: "Industries" },
+            { n: "10+", label: "Industries"         },
             { n: "50+", label: "Projects delivered" },
-            { n: "98%", label: "Client satisfaction" },
+            { n: "98%", label: "Client satisfaction"},
           ].map((s) => (
             <div
               key={s.label}
