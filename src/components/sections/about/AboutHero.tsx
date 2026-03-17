@@ -51,7 +51,7 @@ const LINES: Line[] = [
   ],
   [
     { t: "  founded:  ", c: V },
-    { t: "2022", c: N },
+    { t: "2024", c: N },
     { t: ",", c: P },
   ],
   [],
