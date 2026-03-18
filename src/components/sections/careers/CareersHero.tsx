@@ -33,7 +33,7 @@ const STATS = [
 export default function CareersHero() {
   return (
     <section
-      className="relative pt-32 pb-28 overflow-hidden"
+      className="relative pt-10 pb-28 overflow-hidden"
       style={{ background: "#07060f" }}
     >
       {/* ── CSS keyframes ── */}

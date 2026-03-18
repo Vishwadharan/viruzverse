@@ -238,7 +238,7 @@ export default function ServicesPageContent() {
     <main style={{ backgroundColor: "#faf9ff" }}>
 
       {/* ══ HERO ══ */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
+      <section className="relative pt-15 pb-24 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage:

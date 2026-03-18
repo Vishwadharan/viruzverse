@@ -44,7 +44,7 @@ export default function ContactPage() {
           z-index: 1;
           max-width: 1100px;
           margin: 0 auto;
-          padding: 140px 40px 80px;
+          padding: 100px 40px 80px;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 80px;
