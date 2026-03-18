@@ -238,7 +238,7 @@ export default function CareersHero() {
               className="flex flex-wrap gap-3 mb-14"
             >
               {/* Primary */}
-              <a href="#open-roles"
+              <a href="/contact"
                 className="group relative inline-flex items-center gap-2 px-8 py-4 rounded-2xl
                            text-[13px] font-bold text-white overflow-hidden transition-all
                            duration-300 hover:-translate-y-1"
@@ -274,7 +274,7 @@ export default function CareersHero() {
                   boxShadow: `inset 0 0 20px ${P}06`,
                 }}
               >
-                Meet the team
+                View About
               </a>
             </motion.div>
 
@@ -404,7 +404,7 @@ export default function CareersHero() {
                 <div className="mt-5 pt-4 flex items-center justify-between"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
                   <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.2)" }}>
-                    viruzverse.com/careers
+                    viruzverse.in/careers
                   </span>
                   <div className="flex items-center gap-1.5">
                     <span className="relative flex h-1.5 w-1.5">

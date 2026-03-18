@@ -41,7 +41,7 @@ const LINES: Line[] = [
   ],
   [
     { t: "  type:     ", c: V },
-    { t: '"B2B Software Studio"', c: S },
+    { t: '"B2B Software Company"', c: S },
     { t: ",", c: P },
   ],
   [
@@ -338,7 +338,7 @@ export default function AboutHero() {
               className="text-[16px] leading-[1.85] mb-4 max-w-[500px]"
               style={{ color: "#6b7280" }}
             >
-              Viruzverse is a B2B software studio based in Coimbatore, Tamil
+              Viruzverse is a B2B software company based in Coimbatore, Tamil
               Nadu. Production-grade software — domain-deep, founder-direct,
               built to last.
             </motion.p>
@@ -352,7 +352,7 @@ export default function AboutHero() {
                 className="text-[13px] font-medium"
                 style={{ color: "#9ca3af" }}
               >
-                Coimbatore, Tamil Nadu · Est. 2022
+                Coimbatore, Tamil Nadu · Est. 2024
               </span>
             </motion.div>
 

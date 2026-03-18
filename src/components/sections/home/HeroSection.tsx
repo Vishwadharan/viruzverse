@@ -2,14 +2,20 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Sparkles, CheckCircle2, Terminal } from "lucide-react";
+import type { Transition } from "framer-motion";
+import { ArrowRight, Sparkles, CheckCircle2, Terminal, Cpu } from "lucide-react";
 import Magnetic3DButton from "../../ui/Magnetic3DButton";
 
+const EASE = [0.21, 0.47, 0.32, 0.98] as [number, number, number, number];
 
-const F = (d = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay: d, ease: [0.21, 0.47, 0.32, 0.98] },
+const F = (d = 0): {
+  initial: { opacity: number; y: number };
+  animate:  { opacity: number; y: number };
+  transition: Transition;
+} => ({
+  initial:    { opacity: 0, y: 24 },
+  animate:    { opacity: 1, y: 0  },
+  transition: { duration: 0.6, delay: d, ease: EASE },
 });
 
 const CODE_LINES = [
@@ -27,16 +33,6 @@ const CHECKS = [
   "End-to-end product delivery",
 ];
 
-const TAGS = [
-  "Next.js 16", "Node.js", "PostgreSQL",
-  "OpenAI", "Prisma", "TypeScript", "Redis", "Docker",
-];
-
-const INFO_CARDS = [
-  { label: "Currently accepting", val: "New projects",      icon: "🟣" },
-  { label: "Based in",            val: "Coimbatore, India", icon: "📍" },
-];
-
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
 
@@ -51,7 +47,7 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100svh] flex flex-col justify-center overflow-hidden"
+      className="relative min-h-svh flex flex-col justify-center overflow-hidden"
       style={{ backgroundColor: "#ffffff" }}
     >
 
@@ -59,7 +55,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 pointer-events-none grid-pattern" aria-hidden />
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <motion.div
-          className="float absolute -top-32 -right-32 w-[700px] h-[700px] rounded-full"
+          className="float absolute -top-32 -right-32 w-175 h-175 rounded-full"
           style={{
             y: orbY,
             background:
@@ -67,7 +63,7 @@ export default function HeroSection() {
           }}
         />
         <motion.div
-          className="float2 absolute -bottom-20 -left-20 w-[500px] h-[500px] rounded-full"
+          className="float2 absolute -bottom-20 -left-20 w-125 h-125 rounded-full"
           style={{
             background:
               "radial-gradient(circle, rgba(167,139,250,0.09) 0%, transparent 65%)",
@@ -76,8 +72,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Main content ── */}
-      {/* ↓ THIS was the missing opening div that caused the crash */}
-      <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-10 w-full relative z-10">
+      <div className="max-w-300 mx-auto px-5 sm:px-8 lg:px-10 w-full relative z-10">
         <motion.div style={{ opacity: fadeOut }}>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_440px] gap-16 items-center">
 
@@ -105,7 +100,7 @@ export default function HeroSection() {
               {/* H1 */}
               <motion.h1
                 {...F(0.08)}
-                className="font-extrabold leading-[1.0] tracking-[-0.04em] mb-5
+                className="font-extrabold leading-none tracking-[-0.04em] mb-5
                            text-[56px] sm:text-[66px] md:text-[74px]
                            lg:text-[64px] xl:text-[78px] 2xl:text-[92px]"
                 style={{ color: "#0a0a0f" }}
@@ -129,8 +124,8 @@ export default function HeroSection() {
               <motion.div
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.65, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="origin-left mb-8 h-[3px] w-20 rounded-full"
+                transition={{ delay: 0.3, duration: 0.65, ease: EASE }}
+                className="origin-left mb-8 h-0.75 w-20 rounded-full"
                 style={{
                   background: "linear-gradient(90deg, #7c3aed, #a78bfa, transparent)",
                 }}
@@ -140,7 +135,7 @@ export default function HeroSection() {
               {/* Description */}
               <motion.p
                 {...F(0.18)}
-                className="text-[17px] lg:text-[18px] leading-[1.82] max-w-[500px] mb-8"
+                className="text-[17px] lg:text-[18px] leading-[1.82] max-w-125 mb-8"
                 style={{ color: "#6b7280" }}
               >
                 We engineer B2B software — AI automation, SaaS platforms,
@@ -156,10 +151,7 @@ export default function HeroSection() {
                       size={15}
                       style={{ color: "#7c3aed", flexShrink: 0 }}
                     />
-                    <span
-                      className="text-[13px] font-medium"
-                      style={{ color: "#6b7280" }}
-                    >
+                    <span className="text-[13px] font-medium" style={{ color: "#6b7280" }}>
                       {c}
                     </span>
                   </div>
@@ -167,7 +159,7 @@ export default function HeroSection() {
               </motion.div>
 
               {/* CTA buttons */}
-              <motion.div {...F(0.33)} className="flex flex-wrap gap-3 mb-12">
+              <motion.div {...F(0.33)} className="flex flex-wrap gap-3">
                 <Magnetic3DButton variant="primary" href="/contact">
                   Start a project <ArrowRight size={15} />
                 </Magnetic3DButton>
@@ -175,38 +167,13 @@ export default function HeroSection() {
                   Explore services
                 </Magnetic3DButton>
               </motion.div>
-
-              {/* Tech stack */}
-              <motion.div {...F(0.4)}>
-                <p
-                  className="text-[11px] font-mono font-semibold uppercase tracking-[0.14em] mb-3"
-                  style={{ color: "#9ca3af" }}
-                >
-                  Built with
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {TAGS.map((tag, i) => (
-                    <motion.span
-                      key={tag}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.45 + i * 0.04 }}
-                      whileHover={{ y: -3, scale: 1.06 }}
-                      className="px-3 py-1.5 rounded-full text-[11px] font-mono cursor-default glass-soft shadow-sm"
-                      style={{ color: "#374151" }}
-                    >
-                      {tag}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
             </div>
 
             {/* ════ RIGHT ════ */}
             <motion.div
               initial={{ opacity: 0, x: 28, rotateY: -10 }}
               animate={{ opacity: 1, x: 0, rotateY: 0 }}
-              transition={{ duration: 0.75, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
+              transition={{ duration: 0.75, delay: 0.3, ease: EASE }}
               className="hidden lg:flex flex-col gap-4"
               style={{ perspective: 1000 }}
             >
@@ -223,7 +190,7 @@ export default function HeroSection() {
                 }}
               >
                 <div
-                  className="absolute top-0 left-0 right-0 h-[1px]"
+                  className="absolute top-0 left-0 right-0 h-px"
                   style={{
                     background:
                       "linear-gradient(90deg, transparent, rgba(124,58,237,0.6), transparent)",
@@ -242,7 +209,8 @@ export default function HeroSection() {
                     ))}
                   </div>
                   <span
-                    className="flex-1 text-center text-[11px] font-mono flex items-center justify-center gap-1.5"
+                    className="flex-1 text-center text-[11px] font-mono
+                               flex items-center justify-center gap-1.5"
                     style={{ color: "#9ca3af" }}
                   >
                     <Terminal size={10} /> viruzverse — zsh
@@ -271,7 +239,7 @@ export default function HeroSection() {
                     </motion.div>
                   ))}
 
-                  {/* ✅ Fixed: removed steps(1) easing */}
+                  {/* Blinking cursor */}
                   <motion.div
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ repeat: Infinity, duration: 1.1, ease: "linear" }}
@@ -279,7 +247,7 @@ export default function HeroSection() {
                   >
                     <span style={{ color: "#7c3aed" }}>❯</span>
                     <span
-                      className="inline-block w-[9px] h-[16px] rounded-[2px]"
+                      className="inline-block w-2.25 h-4 rounded-xs"
                       style={{
                         background: "#7c3aed",
                         boxShadow: "0 0 10px rgba(124,58,237,0.6)",
@@ -317,31 +285,42 @@ export default function HeroSection() {
                 </div>
               </motion.div>
 
-              {/* Two info cards */}
-              <div className="grid grid-cols-2 gap-3">
-                {INFO_CARDS.map((card, i) => (
-                  <motion.div
-                    key={card.label}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.3 + i * 0.1 }}
-                    whileHover={{ y: -4, scale: 1.03 }}
-                    className="flex flex-col gap-1.5 p-4 rounded-2xl glass cursor-default"
-                    style={{
-                      boxShadow:
-                        "0 4px 20px rgba(124,58,237,0.08), inset 0 1px 0 rgba(255,255,255,0.95)",
-                    }}
-                  >
-                    <span className="text-[18px]">{card.icon}</span>
-                    <p className="text-[13px] font-bold" style={{ color: "#0a0a0f" }}>
-                      {card.val}
-                    </p>
-                    <p className="text-[11px] font-mono" style={{ color: "#9ca3af" }}>
-                      {card.label}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+              {/* ── Built with emerging tech badge ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, ease: EASE }}
+                className="flex items-center gap-3 px-5 py-4 rounded-2xl glass"
+                style={{
+                  boxShadow:
+                    "0 4px 20px rgba(124,58,237,0.08), inset 0 1px 0 rgba(255,255,255,0.95)",
+                }}
+              >
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(124,58,237,0.12), rgba(167,139,250,0.15))",
+                    border: "1px solid rgba(124,58,237,0.15)",
+                  }}
+                >
+                  <Cpu size={15} style={{ color: "#7c3aed" }} />
+                </div>
+
+                <p className="text-[13px] font-semibold" style={{ color: "#0a0a0f" }}>
+                  Built with emerging tech
+                </p>
+
+                <motion.div
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="ml-auto w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{
+                    background: "#7c3aed",
+                    boxShadow: "0 0 6px rgba(124,58,237,0.6)",
+                  }}
+                />
+              </motion.div>
 
             </motion.div>
           </div>
@@ -364,7 +343,7 @@ export default function HeroSection() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[1px] h-8 rounded-full"
+          className="w-px h-8 rounded-full"
           style={{ background: "linear-gradient(to bottom, #7c3aed, transparent)" }}
         />
       </motion.div>

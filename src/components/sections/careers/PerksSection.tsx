@@ -229,7 +229,6 @@ export default function PerksSection() {
                 {/* Icon */}
                 <div className="relative z-10 mb-5">
                   <div className="relative w-12 h-12">
-                    {/* Rotating border ring */}
                     <div className="absolute inset-0 rounded-2xl pointer-events-none"
                       style={{
                         background: `conic-gradient(from 0deg,${color}50,transparent 50%,${color}30,transparent)`,
@@ -254,8 +253,7 @@ export default function PerksSection() {
 
                 {/* Text */}
                 <div className="relative z-10 flex-1">
-                  <h3 className="text-[14px] font-black text-white mb-2 leading-tight
-                                 transition-colors duration-200">
+                  <h3 className="text-[14px] font-black text-white mb-2 leading-tight">
                     {title}
                   </h3>
                   <p className="text-[12px] leading-[1.8]"
@@ -287,42 +285,6 @@ export default function PerksSection() {
           ))}
         </div>
 
-        {/* ── Bottom CTA strip ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, delay: 0.4, ease: EASE }}
-          className="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px overflow-hidden"
-          style={{
-            background: "rgba(255,255,255,0.04)",
-            borderRadius: "20px",
-            border: "1px solid rgba(255,255,255,0.06)",
-            clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
-          }}
-        >
-          {PERKS.map(({ icon: Icon, title, color, glow }, i) => (
-            <div key={title}
-              className="flex flex-col items-center gap-2 py-5 transition-all duration-200"
-              style={{ background: "#07060f" }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.background = `${color}0a`;
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.background = "#07060f";
-              }}
-            >
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center"
-                style={{ background: `${color}14`, border: `1px solid ${color}20` }}>
-                <Icon size={13} style={{ color: glow }} strokeWidth={1.7} />
-              </div>
-              <span className="text-[10px] font-mono text-center leading-tight"
-                style={{ color: "rgba(255,255,255,0.3)" }}>
-                {title}
-              </span>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
