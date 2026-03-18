@@ -9,6 +9,7 @@ const nextConfig = {
   reactStrictMode: false,
   compress: true,
   poweredByHeader: false,
+  devIndicators: false,
 
   turbopack: {
     root: __dirname,

@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, ArrowUpRight, Sparkles } from "lucide-react";
-import { CONTACT_EMAIL } from "@/lib/constants";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 
 const P    = "#7c3aed";
 const P2   = "#a78bfa";
@@ -51,7 +50,7 @@ export default function OpenApplicationCTA() {
         style={{ background: `radial-gradient(ellipse at 100% 100%,${P}06,transparent 65%)` }}
       />
 
-      {/* ── Sep ── */}
+      {/* ── Top sep ── */}
       <div className="absolute top-0 inset-x-0 h-px"
         style={{ background: `linear-gradient(90deg,transparent,${P2}60 40%,${P} 50%,${P2}60 60%,transparent)` }}
       />
@@ -97,7 +96,7 @@ export default function OpenApplicationCTA() {
               style={{ background: `radial-gradient(ellipse at 50% 0%,${P}14,transparent 60%)` }}
             />
 
-            {/* Spinning hex bg decoration */}
+            {/* Spinning hex decorations */}
             <div className="absolute top-[-60px] right-[-60px] w-48 h-48 pointer-events-none opacity-[0.06]"
               style={{
                 background: `conic-gradient(from 0deg,${P},${P2},transparent,${P})`,
@@ -116,45 +115,12 @@ export default function OpenApplicationCTA() {
             {/* ── Content ── */}
             <div className="relative z-10 px-8 sm:px-14 py-14">
 
-              {/* Icon orbit */}
-              <div className="flex justify-center mb-8">
-                <div className="relative w-16 h-16">
-                  {/* Outer pulsing ring */}
-                  <div className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{
-                      border: `1px solid ${P}25`,
-                      animation: "blobPulse 3s ease-in-out infinite",
-                    }}
-                  />
-                  {/* Rotating conic ring */}
-                  <div className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{
-                      background: `conic-gradient(from 0deg,${P}50,transparent 50%,${P2}30,transparent)`,
-                      animation: "orbitRing 4s linear infinite",
-                      WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                      padding: "1.5px",
-                    }}
-                  />
-                  {/* Icon bg */}
-                  <div className="absolute inset-[2px] rounded-full flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg,${P}20,${CYAN}14)`,
-                      boxShadow: `0 0 32px ${P}22`,
-                    }}
-                  >
-                    <Mail size={22} style={{ color: P2 }} strokeWidth={1.6} />
-                  </div>
-                </div>
-              </div>
-
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
+                transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
                 className="flex justify-center mb-6"
               >
                 <span
@@ -177,7 +143,7 @@ export default function OpenApplicationCTA() {
                 initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
+                transition={{ duration: 0.65, delay: 0.18, ease: EASE }}
                 className="font-black tracking-[-0.04em] leading-[1.03] text-white mb-5"
                 style={{ fontSize: "clamp(26px,4.5vw,52px)" }}
               >
@@ -198,7 +164,7 @@ export default function OpenApplicationCTA() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: 0.28, ease: EASE }}
+                transition={{ duration: 0.55, delay: 0.26, ease: EASE }}
                 className="text-[14px] leading-[1.9] max-w-lg mx-auto mb-10"
                 style={{ color: "rgba(255,255,255,0.42)" }}
               >
@@ -207,18 +173,17 @@ export default function OpenApplicationCTA() {
                 reach out if there&apos;s a fit.
               </motion.p>
 
-              {/* CTA */}
+              {/* CTA — single button to /contact */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.36, ease: EASE }}
-                className="flex flex-col sm:flex-row items-center justify-center gap-3"
+                transition={{ duration: 0.5, delay: 0.34, ease: EASE }}
+                className="flex justify-center"
               >
-                {/* Primary shimmer button */}
                 <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=Open Application — Viruzverse`}
-                  className="group relative inline-flex items-center gap-2 px-9 py-4 rounded-2xl
+                  href="/contact"
+                  className="group relative inline-flex items-center gap-2 px-10 py-4 rounded-2xl
                              text-[13px] font-bold text-white overflow-hidden
                              transition-all duration-300 hover:-translate-y-1"
                   style={{
@@ -235,28 +200,13 @@ export default function OpenApplicationCTA() {
                     }}
                   />
                   <span className="relative z-10 flex items-center gap-2">
-                    <Mail size={14} />
-                    Send open application
+                    Get in Touch
                     <ArrowUpRight size={14}
                       className="transition-transform duration-300
                                  group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     />
                   </span>
                 </a>
-
-                {/* Email display pill */}
-                <div
-                  className="inline-flex items-center gap-2 px-5 py-4 rounded-2xl
-                             text-[11px] font-mono transition-all duration-300 hover:-translate-y-0.5"
-                  style={{
-                    color: "rgba(255,255,255,0.35)",
-                    background: "rgba(255,255,255,0.04)",
-                    border: `1.5px dashed ${P}30`,
-                  }}
-                >
-                  <Mail size={11} style={{ color: P2 }} />
-                  {CONTACT_EMAIL}
-                </div>
               </motion.div>
 
               {/* Divider strip */}
@@ -265,9 +215,9 @@ export default function OpenApplicationCTA() {
                 style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
               >
                 {[
-                  { label: "Response time",  value: "Within 48h"   },
-                  { label: "Process",        value: "2-step only"  },
-                  { label: "Start date",     value: "Flexible"     },
+                  { label: "Response time", value: "Within 48h"  },
+                  { label: "Process",       value: "2-step only" },
+                  { label: "Start date",    value: "Flexible"    },
                 ].map(({ label, value }, i) => (
                   <div key={label} className="flex items-center gap-4">
                     {i > 0 && (
