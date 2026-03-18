@@ -1,5 +1,5 @@
 import ContactForm from "@/components/contact/ContactForm";
-import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 
 export const metadata = {
   title: "Contact — Viruzverse",
@@ -18,7 +18,6 @@ export default function ContactPage() {
           overflow-x: hidden;
         }
 
-        /* ── Subtle noise texture overlay ── */
         .contact-root::before {
           content: '';
           position: fixed;
@@ -29,7 +28,6 @@ export default function ContactPage() {
           opacity: 0.35;
         }
 
-        /* ── Top border accent ── */
         .page-top-border {
           position: fixed;
           top: 0; left: 0; right: 0;
@@ -58,8 +56,6 @@ export default function ContactPage() {
             gap: 48px;
           }
         }
-
-        .hero-left {}
 
         .hero-eyebrow {
           display: inline-flex;
@@ -112,13 +108,6 @@ export default function ContactPage() {
           margin: 0 0 36px;
         }
 
-        /* ── CTA row ── */
-        .hero-ctas {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
         .btn-primary {
           display: inline-flex;
           align-items: center;
@@ -140,32 +129,11 @@ export default function ContactPage() {
           box-shadow: 0 12px 32px rgba(124,58,237,0.45);
         }
 
-        .btn-ghost {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 13px 24px;
-          background: transparent;
-          color: rgba(255,255,255,0.45);
-          font-size: 13px;
-          font-weight: 600;
-          border-radius: 12px;
-          border: 1px solid rgba(255,255,255,0.1);
-          text-decoration: none;
-          transition: color 0.2s, border-color 0.2s, transform 0.2s;
-        }
-
-        .btn-ghost:hover {
-          color: rgba(255,255,255,0.8);
-          border-color: rgba(255,255,255,0.22);
-          transform: translateY(-2px);
-        }
-
         /* ── Right: contact cards ── */
         .hero-right {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px;
         }
 
         .contact-card {
@@ -173,7 +141,7 @@ export default function ContactPage() {
           display: flex;
           align-items: center;
           gap: 16px;
-          padding: 20px 22px;
+          padding: 24px 22px;
           border-radius: 16px;
           background: rgba(255,255,255,0.03);
           border: 1px solid rgba(255,255,255,0.07);
@@ -200,14 +168,13 @@ export default function ContactPage() {
           transform: translateX(4px);
         }
 
-        .cc-email::before   { background: #06b6d4; }
-        .cc-phone::before   { background: #10b981; }
-        .cc-location::before{ background: #7c3aed; }
+        .cc-email::before    { background: #06b6d4; }
+        .cc-location::before { background: #7c3aed; }
 
         .cc-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -222,14 +189,14 @@ export default function ContactPage() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.28);
-          margin-bottom: 3px;
+          margin-bottom: 4px;
         }
 
         .cc-value {
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 800;
           color: white;
-          margin-bottom: 2px;
+          margin-bottom: 3px;
         }
 
         .cc-sub {
@@ -267,7 +234,7 @@ export default function ContactPage() {
           background: rgba(255,255,255,0.06);
         }
 
-        /* ── Stats row ── */
+        /* ── Stats ── */
         .stats {
           position: relative;
           z-index: 1;
@@ -275,7 +242,7 @@ export default function ContactPage() {
           margin: 0 auto;
           padding: 32px 40px;
           display: grid;
-          grid-template-columns: repeat(3,1fr);
+          grid-template-columns: repeat(3, 1fr);
         }
 
         @media (max-width: 860px) {
@@ -296,7 +263,6 @@ export default function ContactPage() {
           font-size: 22px;
           font-weight: 900;
           letter-spacing: -0.03em;
-          color: white;
           margin-bottom: 4px;
         }
 
@@ -369,7 +335,6 @@ export default function ContactPage() {
         }
       `}</style>
 
-      {/* Top accent line */}
       <div className="page-top-border" />
 
       {/* ── HERO ── */}
@@ -390,49 +355,30 @@ export default function ContactPage() {
             from SaaS platforms to AI automation. Tell us what you need.
           </p>
 
-          <div className="hero-ctas">
-            <a href="mailto:contact@viruzverse.in" className="btn-primary">
-              <Mail size={14} />
-              Send an email
-            </a>
-            <a href="tel:+918300262005" className="btn-ghost">
-              <Phone size={13} />
-              +91 83002 62005
-            </a>
-          </div>
+          {/* Only email CTA remains */}
+          <a href="mailto:contact@viruzverse.in" className="btn-primary">
+            <Mail size={14} />
+            Connect with us
+          </a>
         </div>
 
+        {/* Only email + location cards remain */}
         <div className="hero-right">
-          {/* Email */}
           <a href="mailto:contact@viruzverse.in" className="contact-card cc-email">
-            <div className="cc-icon" style={{ background:"rgba(6,182,212,0.12)" }}>
-              <Mail size={17} style={{ color:"#67e8f9" }} strokeWidth={1.6} />
+            <div className="cc-icon" style={{ background: "rgba(6,182,212,0.12)" }}>
+              <Mail size={18} style={{ color: "#67e8f9" }} strokeWidth={1.6} />
             </div>
             <div className="cc-body">
               <div className="cc-label">Email</div>
               <div className="cc-value">contact@viruzverse.in</div>
               <div className="cc-sub">Reply within 48 hours</div>
             </div>
-            <ArrowUpRight size={14} className="cc-arrow" style={{ color:"#67e8f9" }} />
+            <ArrowUpRight size={14} className="cc-arrow" style={{ color: "#67e8f9" }} />
           </a>
 
-          {/* Phone */}
-          <a href="tel:+918300262005" className="contact-card cc-phone">
-            <div className="cc-icon" style={{ background:"rgba(16,185,129,0.12)" }}>
-              <Phone size={17} style={{ color:"#34d399" }} strokeWidth={1.6} />
-            </div>
-            <div className="cc-body">
-              <div className="cc-label">Phone</div>
-              <div className="cc-value">+91 83002 62005</div>
-              <div className="cc-sub">Mon – Sat, 10am – 7pm IST</div>
-            </div>
-            <ArrowUpRight size={14} className="cc-arrow" style={{ color:"#34d399" }} />
-          </a>
-
-          {/* Location */}
           <div className="contact-card cc-location">
-            <div className="cc-icon" style={{ background:"rgba(124,58,237,0.12)" }}>
-              <MapPin size={17} style={{ color:"#a78bfa" }} strokeWidth={1.6} />
+            <div className="cc-icon" style={{ background: "rgba(124,58,237,0.12)" }}>
+              <MapPin size={18} style={{ color: "#a78bfa" }} strokeWidth={1.6} />
             </div>
             <div className="cc-body">
               <div className="cc-label">Office</div>
