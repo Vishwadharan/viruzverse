@@ -5,3 +5,7 @@ export const SITE_OG_IMAGE    = "https://viruzverse.com/og-image.png";
 export const SITE_KEYWORDS    = "B2B software, AI automation, SaaS, CRM, ERP, edtech, mobile apps, API integrations, Coimbatore";
 // lib/constants.ts
 export const WHATSAPP_URL = "https://wa.me/918300262005"; // ← your real number
+
+export const CONTACT_EMAIL    = "contact@viruzverse.in";
+export const CONTACT_PHONE    = "+91 83002 62005";
+export const CONTACT_PHONE_URL = "tel:+918300262005";

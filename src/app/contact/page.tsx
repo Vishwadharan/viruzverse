@@ -1,127 +1,481 @@
-import ContactForm from '@/components/contact/ContactForm';
+import ContactForm from "@/components/contact/ContactForm";
+import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 
 export const metadata = {
-  title: 'Contact Us - Viruzverse',
-  description: 'Get in touch with Viruzverse Solutions',
+  title: "Contact — Viruzverse",
+  description: "Get in touch with Viruzverse Solutions",
 };
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen">
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-4 sm:px-8 lg:px-10 bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-700 text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-        <div className="max-w-[1280px] mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-8 border border-white/30">
-            <svg className="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-            </svg>
-            <span className="text-lg font-semibold">Let's Build Something Great</span>
+    <main className="contact-root">
+      <style>{`
+        .contact-root {
+          min-height: 100vh;
+          background: #080711;
+          color: white;
+          font-family: inherit;
+          overflow-x: hidden;
+        }
+
+        /* ── Subtle noise texture overlay ── */
+        .contact-root::before {
+          content: '';
+          position: fixed;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.35;
+        }
+
+        /* ── Top border accent ── */
+        .page-top-border {
+          position: fixed;
+          top: 0; left: 0; right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #7c3aed 40%, #06b6d4 60%, transparent);
+          z-index: 100;
+        }
+
+        /* ── Hero ── */
+        .hero {
+          position: relative;
+          z-index: 1;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 100px 40px 80px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+
+        @media (max-width: 860px) {
+          .hero {
+            grid-template-columns: 1fr;
+            padding: 120px 24px 60px;
+            gap: 48px;
+          }
+        }
+
+        .hero-left {}
+
+        .hero-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 11px;
+          font-family: monospace;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.35);
+          margin-bottom: 28px;
+        }
+
+        .hero-eyebrow-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #10b981;
+          box-shadow: 0 0 8px #10b981;
+          animation: blink 2.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+          0%,100% { opacity: 1; }
+          50%      { opacity: 0.3; }
+        }
+
+        .hero-h1 {
+          font-size: clamp(40px, 5.5vw, 68px);
+          font-weight: 900;
+          line-height: 1.0;
+          letter-spacing: -0.04em;
+          color: white;
+          margin: 0 0 24px;
+        }
+
+        .hero-h1 em {
+          font-style: normal;
+          background: linear-gradient(120deg, #7c3aed, #a78bfa 50%, #06b6d4);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .hero-desc {
+          font-size: 15px;
+          line-height: 1.8;
+          color: rgba(255,255,255,0.38);
+          max-width: 380px;
+          margin: 0 0 36px;
+        }
+
+        /* ── CTA row ── */
+        .hero-ctas {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
+        .btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 13px 24px;
+          background: #7c3aed;
+          color: white;
+          font-size: 13px;
+          font-weight: 700;
+          border-radius: 12px;
+          text-decoration: none;
+          transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+          box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+        }
+
+        .btn-primary:hover {
+          background: #6d28d9;
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(124,58,237,0.45);
+        }
+
+        .btn-ghost {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 13px 24px;
+          background: transparent;
+          color: rgba(255,255,255,0.45);
+          font-size: 13px;
+          font-weight: 600;
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.1);
+          text-decoration: none;
+          transition: color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .btn-ghost:hover {
+          color: rgba(255,255,255,0.8);
+          border-color: rgba(255,255,255,0.22);
+          transform: translateY(-2px);
+        }
+
+        /* ── Right: contact cards ── */
+        .hero-right {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .contact-card {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 20px 22px;
+          border-radius: 16px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          text-decoration: none;
+          transition: background 0.25s, border-color 0.25s, transform 0.25s;
+          overflow: hidden;
+        }
+
+        .contact-card::before {
+          content: '';
+          position: absolute;
+          left: 0; top: 16px; bottom: 16px;
+          width: 2px;
+          border-radius: 2px;
+          opacity: 0;
+          transition: opacity 0.25s;
+        }
+
+        .contact-card:hover::before { opacity: 1; }
+
+        .contact-card:hover {
+          background: rgba(255,255,255,0.055);
+          border-color: rgba(255,255,255,0.12);
+          transform: translateX(4px);
+        }
+
+        .cc-email::before   { background: #06b6d4; }
+        .cc-phone::before   { background: #10b981; }
+        .cc-location::before{ background: #7c3aed; }
+
+        .cc-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .cc-body { flex: 1; min-width: 0; }
+
+        .cc-label {
+          font-size: 10px;
+          font-family: monospace;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.28);
+          margin-bottom: 3px;
+        }
+
+        .cc-value {
+          font-size: 14px;
+          font-weight: 800;
+          color: white;
+          margin-bottom: 2px;
+        }
+
+        .cc-sub {
+          font-size: 11px;
+          font-family: monospace;
+          color: rgba(255,255,255,0.28);
+        }
+
+        .cc-arrow {
+          opacity: 0;
+          transition: opacity 0.2s, transform 0.2s;
+          flex-shrink: 0;
+        }
+
+        .contact-card:hover .cc-arrow {
+          opacity: 0.5;
+          transform: translate(2px,-2px);
+        }
+
+        /* ── Divider ── */
+        .divider {
+          position: relative;
+          z-index: 1;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 40px;
+        }
+
+        @media (max-width: 860px) {
+          .divider { padding: 0 24px; }
+        }
+
+        .divider-line {
+          height: 1px;
+          background: rgba(255,255,255,0.06);
+        }
+
+        /* ── Stats row ── */
+        .stats {
+          position: relative;
+          z-index: 1;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 32px 40px;
+          display: grid;
+          grid-template-columns: repeat(3,1fr);
+        }
+
+        @media (max-width: 860px) {
+          .stats { padding: 28px 24px; }
+        }
+
+        .stat-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 12px 0;
+          border-right: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .stat-item:last-child { border-right: none; }
+
+        .stat-val {
+          font-size: 22px;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          color: white;
+          margin-bottom: 4px;
+        }
+
+        .stat-label {
+          font-size: 10px;
+          font-family: monospace;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.28);
+        }
+
+        /* ── Form section ── */
+        .form-section {
+          position: relative;
+          z-index: 1;
+          max-width: 680px;
+          margin: 0 auto;
+          padding: 60px 40px 120px;
+        }
+
+        @media (max-width: 860px) {
+          .form-section { padding: 48px 24px 80px; }
+        }
+
+        .form-heading {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .form-heading h2 {
+          font-size: clamp(24px, 3.5vw, 36px);
+          font-weight: 900;
+          letter-spacing: -0.04em;
+          color: white;
+          margin: 0 0 10px;
+        }
+
+        .form-heading h2 em {
+          font-style: normal;
+          background: linear-gradient(120deg, #7c3aed, #a78bfa 50%, #06b6d4);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .form-heading p {
+          font-size: 14px;
+          color: rgba(255,255,255,0.32);
+          margin: 0;
+        }
+
+        .form-card {
+          background: rgba(255,255,255,0.025);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 24px;
+          overflow: hidden;
+        }
+
+        .form-card-topbar {
+          height: 2px;
+          background: linear-gradient(90deg, #7c3aed, #a78bfa, #06b6d4);
+        }
+
+        .form-card-inner {
+          padding: 36px;
+        }
+
+        @media (max-width: 540px) {
+          .form-card-inner { padding: 24px; }
+        }
+      `}</style>
+
+      {/* Top accent line */}
+      <div className="page-top-border" />
+
+      {/* ── HERO ── */}
+      <div className="hero">
+        <div className="hero-left">
+          <div className="hero-eyebrow">
+            <span className="hero-eyebrow-dot" />
+            Available for new projects
           </div>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">Get In Touch</h1>
-          <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto leading-relaxed">
-            Let's discuss your AI project. Book a free consultation today.
+
+          <h1 className="hero-h1">
+            Let&apos;s work<br />
+            <em>together</em>
+          </h1>
+
+          <p className="hero-desc">
+            Have a project in mind? We build exceptional digital products —
+            from SaaS platforms to AI automation. Tell us what you need.
           </p>
+
+          <div className="hero-ctas">
+            <a href="mailto:contact@viruzverse.in" className="btn-primary">
+              <Mail size={14} />
+              Send an email
+            </a>
+            <a href="tel:+918300262005" className="btn-ghost">
+              <Phone size={13} />
+              +91 83002 62005
+            </a>
+          </div>
         </div>
-      </section>
 
-      {/* Main Section */}
-      <section className="py-24 px-4 sm:px-8 lg:px-10 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-[1280px] mx-auto grid lg:grid-cols-2 gap-16 items-start">
-
-          {/* Left — Contact Info */}
-          <div className="space-y-6 lg:sticky lg:top-24">
-            <div>
-              <h2 className="text-4xl font-black text-gray-900 mb-3">Contact Details</h2>
-              <p className="text-xl text-gray-600">We're always happy to hear from you.</p>
+        <div className="hero-right">
+          {/* Email */}
+          <a href="mailto:contact@viruzverse.in" className="contact-card cc-email">
+            <div className="cc-icon" style={{ background:"rgba(6,182,212,0.12)" }}>
+              <Mail size={17} style={{ color:"#67e8f9" }} strokeWidth={1.6} />
             </div>
-
-            {/* Company Card */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-xl">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-black text-gray-900">Viruzverse</h3>
-                  <p className="text-gray-500 font-medium">Viruzverse Solutions Private Limited</p>
-                </div>
-              </div>
+            <div className="cc-body">
+              <div className="cc-label">Email</div>
+              <div className="cc-value">contact@viruzverse.in</div>
+              <div className="cc-sub">Reply within 48 hours</div>
             </div>
+            <ArrowUpRight size={14} className="cc-arrow" style={{ color:"#67e8f9" }} />
+          </a>
 
-            {/* Email */}
-            <a href="mailto:contact@viruzverse.in" className="group flex items-center gap-5 bg-white rounded-3xl p-6 border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1 hover:border-blue-100 transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Email Us</p>
-                <p className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">contact@viruzverse.in</p>
-              </div>
-              <svg className="w-5 h-5 text-gray-400 ml-auto group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
+          {/* Phone */}
+          <a href="tel:+918300262005" className="contact-card cc-phone">
+            <div className="cc-icon" style={{ background:"rgba(16,185,129,0.12)" }}>
+              <Phone size={17} style={{ color:"#34d399" }} strokeWidth={1.6} />
+            </div>
+            <div className="cc-body">
+              <div className="cc-label">Phone</div>
+              <div className="cc-value">+91 83002 62005</div>
+              <div className="cc-sub">Mon – Sat, 10am – 7pm IST</div>
+            </div>
+            <ArrowUpRight size={14} className="cc-arrow" style={{ color:"#34d399" }} />
+          </a>
 
-            {/* Phone */}
-            <a href="tel:+918300262005" className="group flex items-center gap-5 bg-white rounded-3xl p-6 border border-gray-100 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-1 hover:border-emerald-100 transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Call Us</p>
-                <p className="text-lg font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">+91 83002 62005</p>
-              </div>
-              <svg className="w-5 h-5 text-gray-400 ml-auto group-hover:text-emerald-500 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-
-            {/* Address */}
-            <div className="flex items-start gap-5 bg-white rounded-3xl p-6 border border-gray-100 shadow-xl">
-              <div className="w-14 h-14 bg-gradient-to-r from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Visit Us</p>
-                <p className="text-lg font-bold text-gray-900">Coimbatore, Tamil Nadu</p>
-                <p className="text-sm text-gray-500 mt-1 leading-relaxed">
-                  1274, Mettupalayam Rd,<br />
-                  Saibaba Colony,<br />
-                  Coimbatore — 641038
-                </p>
-              </div>
+          {/* Location */}
+          <div className="contact-card cc-location">
+            <div className="cc-icon" style={{ background:"rgba(124,58,237,0.12)" }}>
+              <MapPin size={17} style={{ color:"#a78bfa" }} strokeWidth={1.6} />
+            </div>
+            <div className="cc-body">
+              <div className="cc-label">Office</div>
+              <div className="cc-value">Coimbatore, Tamil Nadu</div>
+              <div className="cc-sub">1274, Mettupalayam Rd, 641038</div>
             </div>
           </div>
-
-          {/* Right — Form (Client Component) */}
-          <ContactForm />
         </div>
-      </section>
+      </div>
 
-      {/* Bottom CTA */}
-      <section className="py-20 px-4 sm:px-8 lg:px-10 bg-gradient-to-br from-purple-600 to-blue-700 text-white text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-black mb-6">Prefer a Quick Call?</h2>
-          <p className="text-xl opacity-90 mb-10">Skip the form and call us directly.</p>
-          <a href="tel:+918300262005" className="inline-flex items-center gap-3 bg-white text-purple-700 font-black text-xl px-10 py-5 rounded-2xl shadow-2xl hover:scale-[1.03] transition-all duration-300">
-            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            +91 83002 62005
-          </a>
+      {/* ── STATS ── */}
+      <div className="divider">
+        <div className="divider-line" />
+      </div>
+      <div className="stats">
+        {[
+          { val: "48h",  label: "Avg. Response", color: "#a78bfa" },
+          { val: "Free", label: "Consultation",  color: "#06b6d4" },
+          { val: "24/7", label: "Support",       color: "#10b981" },
+        ].map(({ val, label, color }) => (
+          <div key={val} className="stat-item">
+            <div className="stat-val" style={{ color }}>{val}</div>
+            <div className="stat-label">{label}</div>
+          </div>
+        ))}
+      </div>
+      <div className="divider">
+        <div className="divider-line" />
+      </div>
+
+      {/* ── FORM ── */}
+      <div className="form-section">
+        <div className="form-heading">
+          <h2>Start a <em>conversation</em></h2>
+          <p>Fill in the details below and we&apos;ll be in touch shortly.</p>
         </div>
-      </section>
+        <div className="form-card">
+          <div className="form-card-topbar" />
+          <div className="form-card-inner">
+            <ContactForm />
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

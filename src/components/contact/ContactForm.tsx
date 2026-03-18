@@ -1,103 +1,210 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import type { CSSProperties } from "react";
+import { Send, CheckCircle, RotateCcw } from "lucide-react";
+
+type FieldName = "name" | "email" | "phone" | "service" | "message";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [focused,   setFocused]   = useState<FieldName | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const inputStyle = (name: FieldName): CSSProperties => ({
+    width: "100%",
+    padding: "12px 14px",
+    fontSize: "13px",
+    fontFamily: "inherit",
+    color: "white",
+    background: focused === name ? "rgba(124,58,237,0.06)" : "rgba(255,255,255,0.03)",
+    border: focused === name
+      ? "1px solid rgba(124,58,237,0.4)"
+      : "1px solid rgba(255,255,255,0.07)",
+    borderRadius: "10px",
+    outline: "none",
+    transition: "all 0.18s ease",
+    boxShadow: focused === name ? "0 0 0 3px rgba(124,58,237,0.08)" : "none",
+  });
+
+  const labelStyle: CSSProperties = {
+    display: "block",
+    fontSize: "11px",
+    fontFamily: "monospace",
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    color: "rgba(255,255,255,0.32)",
+    marginBottom: "7px",
   };
 
+  /* ── Success ── */
   if (submitted) {
     return (
-      <div className="bg-white rounded-3xl p-8 lg:p-12 border border-gray-100 shadow-2xl flex flex-col items-center justify-center min-h-[400px] text-center">
-        <div className="w-24 h-24 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full flex items-center justify-center mb-8 shadow-2xl">
-          <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-          </svg>
+      <>
+        <style>{`
+          @keyframes pop { 0%{transform:scale(.7);opacity:0} 70%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+        `}</style>
+        <div style={{ textAlign:"center", padding:"40px 0" }}>
+          <div style={{
+            width:64, height:64, borderRadius:"50%",
+            background:"linear-gradient(135deg,#10b981,#059669)",
+            display:"flex", alignItems:"center", justifyContent:"center",
+            margin:"0 auto 20px",
+            animation:"pop .5s cubic-bezier(.22,1,.36,1) forwards",
+            boxShadow:"0 12px 40px rgba(16,185,129,0.35)",
+          }}>
+            <CheckCircle size={28} color="white" strokeWidth={2} />
+          </div>
+          <h3 style={{ fontSize:20, fontWeight:900, color:"white", marginBottom:8 }}>
+            Message sent!
+          </h3>
+          <p style={{ fontSize:13, color:"rgba(255,255,255,0.38)", marginBottom:24 }}>
+            We&apos;ll get back to you within 24 hours.
+          </p>
+          <button
+            onClick={() => setSubmitted(false)}
+            style={{
+              display:"inline-flex", alignItems:"center", gap:7,
+              padding:"10px 20px", borderRadius:10,
+              background:"rgba(124,58,237,0.12)",
+              border:"1px solid rgba(124,58,237,0.22)",
+              color:"#a78bfa", fontSize:13, fontWeight:600,
+              cursor:"pointer", transition:"all .2s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "rgba(124,58,237,0.2)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "rgba(124,58,237,0.12)")}
+          >
+            <RotateCcw size={12} />
+            Send another
+          </button>
         </div>
-        <h3 className="text-3xl font-black text-gray-900 mb-4">Message Sent!</h3>
-        <p className="text-xl text-gray-600 mb-8">We'll get back to you within 24 hours.</p>
-        <button
-          onClick={() => setSubmitted(false)}
-          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-2xl hover:scale-[1.02] transition-all duration-300 shadow-xl"
-        >
-          Send Another Message
-        </button>
-      </div>
+      </>
     );
   }
 
+  /* ── Form ── */
   return (
-    <div className="bg-white rounded-3xl p-8 lg:p-12 border border-gray-100 shadow-2xl">
-      <h2 className="text-3xl font-black text-gray-900 mb-2">Send a Message</h2>
-      <p className="text-gray-500 text-lg mb-10">We'll get back to you within 24 hours.</p>
+    <>
+      <style>{`
+        .cf-placeholder::placeholder { color: rgba(255,255,255,0.18); }
+        select option { background: #0f0b1a; color: white; }
+      `}</style>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid sm:grid-cols-2 gap-6">
+      <form
+        onSubmit={e => { e.preventDefault(); setSubmitted(true); }}
+        style={{ display:"flex", flexDirection:"column", gap:18 }}
+      >
+        {/* Name + Email */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Full Name *</label>
+            <label style={labelStyle}>Name <span style={{ color:"#a78bfa" }}>*</span></label>
             <input
-              type="text"
-              required
-              placeholder="Your full name"
-              className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 focus:bg-white transition-all duration-300"
+              type="text" required placeholder="Your name"
+              className="cf-placeholder"
+              style={inputStyle("name")}
+              onFocus={() => setFocused("name")}
+              onBlur={() => setFocused(null)}
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Email *</label>
+            <label style={labelStyle}>Email <span style={{ color:"#a78bfa" }}>*</span></label>
             <input
-              type="email"
-              required
-              placeholder="your@email.com"
-              className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-white transition-all duration-300"
+              type="email" required placeholder="your@email.com"
+              className="cf-placeholder"
+              style={inputStyle("email")}
+              onFocus={() => setFocused("email")}
+              onBlur={() => setFocused(null)}
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-          <input
-            type="tel"
-            placeholder="+91 00000 00000"
-            className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 focus:bg-white transition-all duration-300"
-          />
+        {/* Phone + Service */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+          <div>
+            <label style={labelStyle}>Phone</label>
+            <input
+              type="tel" placeholder="+91 00000 00000"
+              className="cf-placeholder"
+              style={inputStyle("phone")}
+              onFocus={() => setFocused("phone")}
+              onBlur={() => setFocused(null)}
+            />
+          </div>
+          <div>
+            <label style={labelStyle}>Service</label>
+            <div style={{ position:"relative" }}>
+              <select
+                className="cf-placeholder"
+                style={{ ...inputStyle("service"), appearance:"none", cursor:"pointer", paddingRight:36 }}
+                onFocus={() => setFocused("service")}
+                onBlur={() => setFocused(null)}
+              >
+                <option value="">Select…</option>
+                <option>AI Automation</option>
+                <option>CRM &amp; ERP Systems</option>
+                <option>Custom Projects</option>
+                <option>Custom SaaS</option>
+                <option>EdTech Solutions</option>
+              </select>
+              <svg
+                style={{ position:"absolute", right:12, top:"50%", transform:"translateY(-50%)",
+                         pointerEvents:"none", color:"rgba(255,255,255,0.25)" }}
+                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
         </div>
 
+        {/* Message */}
         <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Service Interested In</label>
-          <select className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 focus:bg-white transition-all duration-300">
-            <option value="">Select a service...</option>
-            <option>AI Automation</option>
-            <option>CRM & ERP Systems</option>
-            <option>Custom Projects</option>
-            <option>Custom SaaS</option>
-            <option>EdTech Solutions</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-bold text-gray-700 mb-2">Your Message *</label>
+          <label style={labelStyle}>Message <span style={{ color:"#a78bfa" }}>*</span></label>
           <textarea
-            required
-            rows={5}
-            placeholder="Describe your project, timeline, and budget..."
-            className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white transition-all duration-300 resize-none"
+            required rows={5}
+            placeholder="Tell us about your project, timeline, and budget…"
+            className="cf-placeholder"
+            style={{ ...inputStyle("message"), resize:"none" }}
+            onFocus={() => setFocused("message")}
+            onBlur={() => setFocused(null)}
           />
         </div>
 
+        {/* Divider */}
+        <div style={{ height:1, background:"rgba(255,255,255,0.05)" }} />
+
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-700 hover:via-indigo-700 hover:to-blue-700 text-white py-5 rounded-2xl text-lg font-black shadow-2xl hover:shadow-purple-500/30 hover:scale-[1.02] transition-all duration-300"
+          style={{
+            display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+            width:"100%", padding:"13px 24px",
+            background:"#7c3aed", color:"white",
+            fontSize:14, fontWeight:800,
+            borderRadius:12, border:"none", cursor:"pointer",
+            transition:"background 0.2s, transform 0.2s, box-shadow 0.2s",
+            boxShadow:"0 8px 28px rgba(124,58,237,0.4)",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = "#6d28d9";
+            e.currentTarget.style.transform  = "translateY(-2px)";
+            e.currentTarget.style.boxShadow  = "0 12px 36px rgba(124,58,237,0.5)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = "#7c3aed";
+            e.currentTarget.style.transform  = "translateY(0)";
+            e.currentTarget.style.boxShadow  = "0 8px 28px rgba(124,58,237,0.4)";
+          }}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
+          <Send size={14} strokeWidth={2} />
           Send Message
         </button>
+
+        <p style={{ textAlign:"center", fontSize:11, fontFamily:"monospace",
+                    color:"rgba(255,255,255,0.18)", margin:0 }}>
+          No spam · We reply within 24 hours
+        </p>
       </form>
-    </div>
+    </>
   );
 }
