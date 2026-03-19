@@ -16,7 +16,7 @@ export function slugify(str: string): string {
 }
 
 export function absoluteUrl(path: string): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://viruzverse.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://viruzverse.in";
   return `${base}${path}`;
 }
 

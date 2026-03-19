@@ -241,18 +241,6 @@ export default function Footer() {
           <p className="text-[11px] font-mono" style={{ color: "#4b5563" }}>
             © 2026 Viruzverse. All rights reserved.
           </p>
-          <div className="flex items-center gap-5">
-            {["Privacy Policy", "Terms of Service"].map(item => (
-              <Link key={item} href={`/${item.toLowerCase().replace(/ /g, "-")}`}
-                className="text-[11px] font-mono transition-colors duration-200"
-                style={{ color: "#4b5563" }}
-                onMouseEnter={e => ((e.target as HTMLElement).style.color = "#9ca3af")}
-                onMouseLeave={e => ((e.target as HTMLElement).style.color = "#4b5563")}
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
           <p className="text-[11px] font-mono" style={{ color: "#4b5563" }}>
             Made with ♥ in Coimbatore
           </p>
