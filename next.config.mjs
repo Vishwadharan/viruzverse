@@ -13,7 +13,7 @@ const nextConfig = {
 
   // ── Deployment: skip type & lint errors blocking the build ──
   typescript: { ignoreBuildErrors: true },
-  eslint:     { ignoreDuringBuilds: true },
+  // eslint:     { ignoreDuringBuilds: true },
 
   turbopack: {
     root: __dirname,
