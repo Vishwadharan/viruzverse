@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/", "/privacy-policy", "/terms-of-service"],
       },
     ],
-    sitemap: "https://viruzverse.com/sitemap.xml",
-    host: "https://viruzverse.com",
+    sitemap: "https://viruzverse.in/sitemap.xml",
+    host: "https://viruzverse.in",
   };
 }
