@@ -113,7 +113,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <MapPin size={12} style={{ color: "#6b7280", flexShrink: 0 }} />
-                <span className="text-[12px] font-mono" style={{ color: "#6b7280" }}>Coimbatore, Tamil Nadu</span>
+                <span className="text-[12px] font-mono" style={{ color: "#6b7280" }}>1274, Metupalayam Road, KK pudur, Coimbatore, 641038</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={12} style={{ color: "#6b7280", flexShrink: 0 }} />
