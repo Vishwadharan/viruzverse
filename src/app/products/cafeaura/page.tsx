@@ -935,7 +935,7 @@ export default function CafeAuraPage() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-7">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_310px] gap-12 items-center min-h-[85vh]">
-            {/* Left */}
+            {/* ── Left ── */}
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -953,7 +953,7 @@ export default function CafeAuraPage() {
                 <span style={{ color: "#374151" }}>/</span>
                 <span
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                               text-[11px] font-mono font-semibold"
+                   text-[11px] font-mono font-semibold"
                   style={{
                     color: A,
                     background: `${A}0f`,
@@ -1025,7 +1025,7 @@ export default function CafeAuraPage() {
                 <Link
                   href="/contact"
                   className="group inline-flex items-center gap-2 px-8 py-4 rounded-2xl
-                             text-[13px] font-bold text-white transition-all duration-300 hover:-translate-y-1"
+                   text-[13px] font-bold text-white transition-all duration-300 hover:-translate-y-1"
                   style={{
                     background: `linear-gradient(135deg,${A},#ea580c)`,
                     boxShadow: `0 12px 32px ${A}45, inset 0 1px 0 rgba(255,255,255,0.2)`,
@@ -1040,7 +1040,7 @@ export default function CafeAuraPage() {
                 <Link
                   href="/products"
                   className="inline-flex items-center px-8 py-4 rounded-2xl
-                             text-[13px] font-semibold transition-all duration-300 hover:-translate-y-1"
+                   text-[13px] font-semibold transition-all duration-300 hover:-translate-y-1"
                   style={{
                     color: "rgba(255,255,255,0.45)",
                     background: "rgba(255,255,255,0.04)",
@@ -1051,12 +1051,12 @@ export default function CafeAuraPage() {
                 </Link>
               </motion.div>
 
-              {/* Stack */}
+              {/* Stack tags */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-                className="flex flex-wrap gap-2"
+                className="flex flex-wrap gap-2 mb-6"
               >
                 {["Flutter", "React", "Supabase", "PostgreSQL", "Realtime"].map(
                   (t) => (
@@ -1074,9 +1074,51 @@ export default function CafeAuraPage() {
                   ),
                 )}
               </motion.div>
+
+              {/* ✅ Fix: moved Privacy/Terms INSIDE the left column — was a rogue 3rd grid child */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
+                className="flex items-center gap-4"
+              >
+                <Link
+                  href="/products/cafeaura/privacy-policy"
+                  className="text-[11px] font-mono transition-colors duration-200 hover:underline underline-offset-2"
+                  style={{ color: "rgba(255,255,255,0.22)" }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(255,255,255,0.5)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(255,255,255,0.22)")
+                  }
+                >
+                  Privacy Policy
+                </Link>
+                <span style={{ color: "rgba(255,255,255,0.1)", fontSize: 12 }}>
+                  ·
+                </span>
+                <Link
+                  href="/products/cafeaura/terms-of-service"
+                  className="text-[11px] font-mono transition-colors duration-200 hover:underline underline-offset-2"
+                  style={{ color: "rgba(255,255,255,0.22)" }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(255,255,255,0.5)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(255,255,255,0.22)")
+                  }
+                >
+                  Terms of Service
+                </Link>
+              </motion.div>
             </div>
 
-            {/* Phone */}
+            {/* ── Right: Phone — now correctly the 2nd grid child ── */}
             <motion.div
               initial={{ opacity: 0, y: 48, filter: "blur(14px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
