@@ -1115,6 +1115,25 @@ export default function CafeAuraPage() {
                 >
                   Terms of Service
                 </Link>
+                <span style={{ color: "rgba(255,255,255,0.1)", fontSize: 12 }}>
+                  ·
+                </span>
+                {/* ✅ Added: Delete Account link — required by Apple & Google Play store guidelines */}
+                <Link
+                  href="/products/cafeaura/delete-account"
+                  className="text-[11px] font-mono transition-colors duration-200 hover:underline underline-offset-2"
+                  style={{ color: "rgba(239,68,68,0.45)" }}
+                  onMouseEnter={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(239,68,68,0.75)")
+                  }
+                  onMouseLeave={(e) =>
+                    ((e.currentTarget as HTMLElement).style.color =
+                      "rgba(239,68,68,0.45)")
+                  }
+                >
+                  Delete Account
+                </Link>
               </motion.div>
             </div>
 
