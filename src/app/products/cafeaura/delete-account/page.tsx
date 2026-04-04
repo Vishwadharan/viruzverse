@@ -279,7 +279,7 @@ export default function DeleteAccountPage() {
             className="text-[12px] font-mono"
             style={{ color: "rgba(255,255,255,0.3)" }}
           >
-            Both methods are fully supported and processed within 45 days.
+            Both methods are fully supported and processed within 30 days.
           </p>
         </motion.div>
 
