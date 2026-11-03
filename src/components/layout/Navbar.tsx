@@ -109,7 +109,7 @@ export default function Navbar() {
 
           {/* ── Logo ── */}
           <Link href="/" className="flex items-center group flex-shrink-0">
-            <ViruzverseLogo size={32} textColor="#0a0a0f" />
+            <ViruzverseLogo size={48} textColor="#0a0a0f" textSize="text-[26px] sm:text-[31px]" />
           </Link>
 
           {/* ── Desktop links ── */}

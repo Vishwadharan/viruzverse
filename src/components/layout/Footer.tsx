@@ -83,7 +83,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center group mb-4 w-fit">
-              <ViruzverseLogo size={36} textColor="#ffffff" />
+              <ViruzverseLogo size={52} textColor="#ffffff" textSize="text-[28px] sm:text-[33px]" />
             </Link>
 
             <p className="text-[13px] leading-[1.8] mb-4" style={{ color: "#6b7280" }}>

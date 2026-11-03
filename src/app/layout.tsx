@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Nothing_You_Could_Do } from 'next/font/google';
+import localFont from 'next/font/local';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageLoader from '@/components/ui/PageLoader';
@@ -12,10 +12,9 @@ import {
   SITE_KEYWORDS,
 } from '@/lib/constants';
 
-const nothing = Nothing_You_Could_Do({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-nothing',
+const mokoto = localFont({
+  src: './fonts/Mokoto.ttf',
+  variable: '--font-mokoto',
   display: 'swap',
 });
 
@@ -65,8 +64,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={nothing.variable}>
-      <body className="font-nothing">
+    <html lang="en" className={mokoto.variable}>
+      <body className="font-sans">
         <PageLoader />
         <Navbar />
         <main className="md:pt-16">

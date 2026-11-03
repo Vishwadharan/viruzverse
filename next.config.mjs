@@ -23,7 +23,8 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    minimumCacheTTL: 60 * 60 * 24 * 30,
+    minimumCacheTTL: 0,
+    unoptimized: true,
   },
 
   experimental: {
@@ -31,59 +32,14 @@ const nextConfig = {
     optimizeServerReact: true,
   },
 
-  // headers: async () => [
-  //   // ── Security + page cache — all routes ──
-  //   {
-  //     source: "/(.*)",
-  //     headers: [
-  //       { key: "X-Frame-Options",        value: "DENY"                            },
-  //       { key: "X-Content-Type-Options", value: "nosniff"                         },
-  //       { key: "Referrer-Policy",        value: "strict-origin-when-cross-origin" },
-  //       { key: "X-XSS-Protection",       value: "1; mode=block"                   },
-  //       { key: "Cache-Control",          value: "public, max-age=3600, stale-while-revalidate=86400" },
-  //     ],
-  //   },
-
-  //   // ── Next.js static chunks — cache forever ──
-  //   {
-  //     source: "/_next/static/(.*)",
-  //     headers: [
-  //       { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-  //     ],
-  //   },
-
-  //   // ── Next.js images ──
-  //   {
-  //     source: "/_next/image(.*)",
-  //     headers: [
-  //       { key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" },
-  //     ],
-  //   },
-
-  //   // ── Public images ──
-  //   {
-  //     source: "/images/(.*)",
-  //     headers: [
-  //       { key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" },
-  //     ],
-  //   },
-
-  //   // ── Fonts — cache forever ──
-  //   {
-  //     source: "/fonts/(.*)",
-  //     headers: [
-  //       { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-  //     ],
-  //   },
-
-  //   // ── Favicon + manifest ──
-  //   {
-  //     source: "/(favicon.ico|manifest.json|robots.txt|sitemap.xml)",
-  //     headers: [
-  //       { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
-  //     ],
-  //   },
-  // ],
+  headers: async () => [
+    {
+      source: "/(.*)",
+      headers: [
+        { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0" },
+      ],
+    },
+  ],
 };
 
 export default nextConfig;
