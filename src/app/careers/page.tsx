@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function CareersPage() {
   return ( 
-    <main>
+    <main className="bg-transparent min-h-screen">
       <CareersHero />
       <CultureSection />
       <PerksSection />

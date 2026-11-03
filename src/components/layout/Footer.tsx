@@ -1,29 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Zap, MapPin, Mail, ArrowUpRight } from "lucide-react";
+import { MapPin, Mail, ArrowUpRight, Heart } from "lucide-react";
 import ViruzverseLogo from "../ui/ViruzverseLogo";
 import { WHATSAPP_URL, LINKEDIN_URL, INSTAGRAM_URL } from "../../lib/constants";
 
 const NAV_LINKS = [
+  { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/products", label: "Products" },
-  { href: "/about",    label: "About"    },
-  { href: "/careers",  label: "Careers"  },
-  { href: "/contact",  label: "Contact"  },
+  { href: "/about", label: "About" },
+  { href: "/careers", label: "Careers" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const SERVICES = [
-  "AI Automation",
-  "SaaS Platforms",
-  "CRM / ERP",
-  "Edtech Solutions",
-  "Mobile Apps",
-  "API Integrations",
+  { href: "/services/custom-saas", label: "Multi-Tenant SaaS" },
+  { href: "/services/crm-erp", label: "CRM / ERP Platforms" },
+  { href: "/services/custom-projects", label: "Custom Architecture & APIs" },
+  { href: "/services/edtech-solutions", label: "Enterprise LMS Systems" },
 ];
 
-/* ── SVG icon components ── */
+const PRODUCTS = [
+  { href: "/products/cafeaura", label: "Cafeaura — Restaurant OS" },
+];
+
 function LinkedInIcon() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
@@ -49,173 +50,116 @@ function WhatsAppIcon() {
 }
 
 const SOCIALS = [
-  { label: "LinkedIn",  href: LINKEDIN_URL,  Icon: LinkedInIcon,  hoverColor: "#0A66C2" },
-  { label: "Instagram", href: INSTAGRAM_URL, Icon: InstagramIcon, hoverColor: "#E1306C" },
-  { label: "WhatsApp",  href: WHATSAPP_URL,  Icon: WhatsAppIcon,  hoverColor: "#25D366" },
+  { label: "LinkedIn", href: LINKEDIN_URL, Icon: LinkedInIcon },
+  { label: "Instagram", href: INSTAGRAM_URL, Icon: InstagramIcon },
+  { label: "WhatsApp", href: WHATSAPP_URL, Icon: WhatsAppIcon },
 ];
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden" style={{ backgroundColor: "#0a0a0f" }}>
+    <footer className="relative border-t border-white/10 bg-[#06060a] text-slate-400 overflow-hidden">
+      {/* Genesis FX Giant Background Watermark */}
+      <div
+        className="pointer-events-none absolute -bottom-10 left-1/2 -translate-x-1/2 text-white/[0.022] text-[15vw] font-black tracking-[-0.06em] select-none uppercase whitespace-nowrap z-0"
+        aria-hidden="true"
+      >
+        VIRUZVERSE
+      </div>
 
-      {/* Top border */}
-      <div className="absolute top-0 left-0 right-0 h-[1px]"
-        style={{ background: "linear-gradient(90deg, transparent, #7c3aed, #a78bfa, #7c3aed, transparent)" }}
-      />
-
-      {/* Orb */}
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 65%)" }}
-      />
-
-      {/* Grid */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)",
-          backgroundSize: "52px 52px",
-        }}
-      />
-
-      <div className="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-10 pt-12 pb-8">
-
-        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-4 lg:gap-12 mb-10">
-
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center group mb-4 w-fit">
-              <ViruzverseLogo size={52} textColor="#ffffff" textSize="text-[28px] sm:text-[33px]" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
+          {/* Brand info */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            <Link href="/" className="flex items-center group w-fit">
+              <ViruzverseLogo size={38} />
             </Link>
-
-            <p className="text-[13px] leading-[1.8] mb-4" style={{ color: "#6b7280" }}>
-              B2B software company building AI-powered products for the real world.
+            <p className="text-sm leading-relaxed text-slate-400 max-w-sm">
+              Architecting next-generation B2B SaaS platforms and enterprise operations software. Engineered for sub-120ms latency, zero legacy debt, and 100% proprietary client IP ownership.
             </p>
-
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
-              style={{ backgroundColor: "rgba(124,58,237,0.12)", border: "1px solid rgba(124,58,237,0.25)" }}
-            >
-              <motion.span
-                animate={{ opacity: [1, 0.3, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "#a78bfa", boxShadow: "0 0 6px rgba(167,139,250,0.8)" }}
-              />
-              <span className="text-[11px] font-mono" style={{ color: "#a78bfa" }}>Accepting projects</span>
-            </div>
-
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-xs font-mono text-slate-500 mt-2">
               <div className="flex items-center gap-2">
-                <MapPin size={12} style={{ color: "#6b7280", flexShrink: 0 }} />
-                <span className="text-[12px] font-mono" style={{ color: "#6b7280" }}>1274, Metupalayam Road, KK pudur, Coimbatore, 641038</span>
+                <MapPin size={14} className="text-violet-400" />
+                <span>Coimbatore, Tamil Nadu, India</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail size={12} style={{ color: "#6b7280", flexShrink: 0 }} />
-                <a
-                  href="mailto:contact@viruzverse.in"
-                  className="text-[12px] font-mono transition-colors duration-200"
-                  style={{ color: "#6b7280" }}
-                  onMouseEnter={e => ((e.target as HTMLElement).style.color = "#a78bfa")}
-                  onMouseLeave={e => ((e.target as HTMLElement).style.color = "#6b7280")}
-                >
-                  contact@viruzverse.in
+                <Mail size={14} className="text-violet-400" />
+                <a href="mailto:viruzverse@gmail.com" className="hover:text-violet-300 transition-colors">
+                  viruzverse@gmail.com
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Company + Services */}
-          <div className="grid grid-cols-2 gap-6 lg:col-span-2 lg:gap-12">
-
-            {/* Company */}
-            <div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-[0.15em] mb-4" style={{ color: "#4b5563" }}>
-                Company
-              </p>
-              <ul className="flex flex-col gap-2.5">
-                {NAV_LINKS.map(link => (
-                  <li key={link.href}>
-                    <Link href={link.href}
-                      className="text-[13px] font-medium transition-all duration-200 flex items-center gap-1 group w-fit"
-                      style={{ color: "#9ca3af" }}
-                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#ffffff")}
-                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "#9ca3af")}
-                    >
-                      {link.label}
-                      <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity -translate-y-0.5" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Services */}
-            <div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-[0.15em] mb-4" style={{ color: "#4b5563" }}>
-                Services
-              </p>
-              <ul className="flex flex-col gap-2.5">
-                {SERVICES.map(s => (
-                  <li key={s}>
-                    <span className="text-[13px] font-medium" style={{ color: "#9ca3af" }}>{s}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Nav links */}
+          <div>
+            <p className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-4">
+              Platform
+            </p>
+            <ul className="flex flex-col gap-2.5 text-sm">
+              {NAV_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="hover:text-violet-400 transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>{label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* CTA + Socials */}
-          <div className="lg:col-span-1">
-            <p className="text-[11px] font-mono font-semibold uppercase tracking-[0.15em] mb-4" style={{ color: "#4b5563" }}>
-              Start a project
+          {/* Services */}
+          <div>
+            <p className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-4">
+              Engineering
             </p>
+            <ul className="flex flex-col gap-2.5 text-sm">
+              {SERVICES.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="hover:text-violet-400 transition-colors inline-flex items-center gap-1 group"
+                  >
+                    <span>{label}</span>
+                    <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <motion.div
-              whileHover={{ scale: 1.02, y: -2 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="rounded-2xl p-5 mb-5"
-              style={{
-                background: "linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(109,40,217,0.08) 100%)",
-                border: "1px solid rgba(124,58,237,0.25)",
-              }}
-            >
-              <p className="text-[13px] leading-[1.7] mb-4" style={{ color: "#9ca3af" }}>
-                Have a project in mind? We respond within 24 hours.
-              </p>
-              <Link href="/contact"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-[12px] font-bold text-white transition-all duration-200 hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #7c3aed, #6d28d9)", boxShadow: "0 4px 14px rgba(124,58,237,0.4)" }}
-              >
-                Get in Touch <ArrowUpRight size={12} />
-              </Link>
-            </motion.div>
+          {/* Products & Social */}
+          <div>
+            <p className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-4">
+              Proprietary OS
+            </p>
+            <ul className="flex flex-col gap-2.5 text-sm mb-6">
+              {PRODUCTS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="hover:text-violet-400 transition-colors inline-flex items-center gap-1 group font-semibold text-violet-300"
+                  >
+                    <span>{label}</span>
+                    <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-            {/* Socials */}
+            <p className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-3">
+              Network
+            </p>
             <div className="flex items-center gap-2">
-              {SOCIALS.map(({ label, href, Icon, hoverColor }) => (
+              {SOCIALS.map(({ label, href, Icon }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200"
-                  style={{
-                    color: "#6b7280",
-                    backgroundColor: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.color = hoverColor;
-                    (e.currentTarget as HTMLElement).style.backgroundColor = `${hoverColor}18`;
-                    (e.currentTarget as HTMLElement).style.borderColor = `${hoverColor}40`;
-                    (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.color = "#6b7280";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.05)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
-                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                  }}
+                  className="w-8 h-8 rounded-lg border border-white/10 bg-white/[0.04] flex items-center justify-center text-slate-400 hover:text-violet-300 hover:border-violet-500/40 hover:bg-violet-950/30 transition-all shadow-xs"
                 >
                   <Icon />
                 </a>
@@ -224,21 +168,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="h-[1px] mb-5"
-          style={{ background: "linear-gradient(90deg, transparent, rgba(124,58,237,0.3), transparent)" }}
-        />
-
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-[11px] font-mono" style={{ color: "#4b5563" }}>
-            © 2026 Viruzverse. All rights reserved.
-          </p>
-          <p className="text-[11px] font-mono" style={{ color: "#4b5563" }}>
-            Made with ♥ in Coimbatore
-          </p>
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-slate-500">
+          <p>© {new Date().getFullYear()} Viruzverse Technologies. B2B Enterprise Software Systems.</p>
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            <span>All Global Systems Nominal</span>
+          </div>
         </div>
-
       </div>
     </footer>
   );

@@ -1,28 +1,32 @@
 "use client";
-import { motion } from "framer-motion";
 
-const ITEMS = [
-  { emoji: "⚡", text: "24-hour response" },
-  { emoji: "🤝", text: "NDA available" },
-  { emoji: "💬", text: "No sales pitch" },
-  { emoji: "🏢", text: "Direct founder contact" },
-  { emoji: "🔒", text: "Your idea is safe with us" },
+import { Zap, FileText, MessageSquare, UserCheck, ShieldCheck, type LucideIcon } from "lucide-react";
+
+interface TrustItem {
+  icon: LucideIcon;
+  text: string;
+}
+
+const ITEMS: TrustItem[] = [
+  { icon: Zap, text: "24-hour response" },
+  { icon: FileText, text: "Mutual NDA ready" },
+  { icon: MessageSquare, text: "Zero sales pitch" },
+  { icon: UserCheck, text: "Direct engineer contact" },
+  { icon: ShieldCheck, text: "100% IP Handover" },
 ];
 
 export default function ContactTrustBar() {
   return (
-    <section className="py-10 border-t border-border relative overflow-hidden">
-      <div className="max-w-site container-pad mx-auto">
-        <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5 }}
-          className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          {ITEMS.map((item) => (
-            <div key={item.text} className="flex items-center gap-2 text-sm text-text-secondary">
-              <span>{item.emoji}</span>
-              <span className="font-mono text-xs">{item.text}</span>
+    <section className="py-8 border-t border-white/10 bg-transparent">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+          {ITEMS.map(({ icon: Icon, text }) => (
+            <div key={text} className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 font-mono">
+              <Icon size={14} className="text-violet-400 shrink-0" />
+              <span>{text}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

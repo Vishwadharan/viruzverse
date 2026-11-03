@@ -1,61 +1,53 @@
-// lib/services.ts
-
-export type ServiceIconKey = "Bot" | "Layers" | "Users" | "BookOpen" | "Puzzle";
+export type ServiceIconKey = "Server" | "Layers" | "Users" | "BookOpen" | "Puzzle";
 
 export type Service = {
-  iconKey: ServiceIconKey;   // ← string, not LucideIcon
+  iconKey: ServiceIconKey;
   name: string;
   href: string;
   tags: string[];
   desc: string;
-  color: string;
   num: string;
 };
 
 export const SERVICES: Service[] = [
   {
-    iconKey: "Bot",
-    name: "AI Automation",
-    href: "/services/ai-automation",
-    tags: ["LLM", "RAG", "Agents", "Pipelines"],
-    desc: "LLM pipelines, RAG systems and intelligent automation that eliminates repetitive work at scale.",
-    color: "#7c3aed",
+    iconKey: "Layers",
+    name: "Custom Multi-Tenant SaaS",
+    href: "/services/custom-saas",
+    tags: ["Multi-Tenant", "Stripe Billing", "PostgreSQL RLS", "Role-Based Auth"],
+    desc: "Complete multi-tenant SaaS architecture from schema design to production. Strict tenant data isolation and high-velocity onboarding.",
     num: "01",
   },
   {
-    iconKey: "Layers",
-    name: "Custom SaaS",
-    href: "/services/custom-saas",
-    tags: ["Multi-tenant", "Billing", "Auth"],
-    desc: "Full-stack SaaS from zero to production. Auth, Stripe, dashboards, CI/CD — built right the first time.",
-    color: "#2563eb",
+    iconKey: "Users",
+    name: "Enterprise CRM & ERP",
+    href: "/services/crm-erp",
+    tags: ["Supply Chain", "Inventory Engines", "Granular RBAC", "Audit Logs"],
+    desc: "Custom operational software engineered specifically for your business processes, eliminating clunky off-the-shelf bloat.",
     num: "02",
   },
   {
-    iconKey: "Users",
-    name: "CRM / ERP",
-    href: "/services/crm-erp",
-    tags: ["Pipelines", "Inventory", "RBAC"],
-    desc: "Custom CRMs and ERPs tailored to your exact workflows — not generic software you adapt to.",
-    color: "#0891b2",
+    iconKey: "Server",
+    name: "High-Throughput APIs & Cloud",
+    href: "/services/ai-automation",
+    tags: ["Redis Queues", "WebSockets", "Sub-120ms P99", "Distributed Microservices"],
+    desc: "Mission-critical cloud infrastructure, real-time event-driven message brokers, and sub-120ms API architectures.",
     num: "03",
   },
   {
     iconKey: "BookOpen",
-    name: "Edtech Platforms",
+    name: "Enterprise Edtech & LMS",
     href: "/services/edtech-solutions",
-    tags: ["LMS", "Assessments", "Portals"],
-    desc: "Course management, live classes, assessments and student portals built for real scale.",
-    color: "#059669",
+    tags: ["LMS Architecture", "Assessment Engines", "Student Portals", "Real-Time Telemetry"],
+    desc: "High-concurrency learning management systems, automated evaluation engines, and secure portals built for scale.",
     num: "04",
   },
   {
     iconKey: "Puzzle",
-    name: "Custom Projects",
+    name: "Bespoke Enterprise Engineering",
     href: "/services/custom-projects",
-    tags: ["APIs", "Integrations", "Systems"],
-    desc: "Unique problems no off-the-shelf product solves. We scope, design, and engineer from scratch.",
-    color: "#d97706",
+    tags: ["Legacy Monolith Refactoring", "Custom Hardware Bridges", "100% Client IP"],
+    desc: "Direct engineering for complex technical challenges that no standard off-the-shelf commercial package can solve.",
     num: "05",
   },
 ];
