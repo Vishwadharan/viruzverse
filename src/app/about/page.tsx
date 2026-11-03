@@ -1,5 +1,3 @@
-// src/app/about/page.tsx
-
 import type { Metadata } from "next";
 import {
   SITE_NAME,
@@ -15,7 +13,7 @@ import AboutCTA from "@/components/sections/about/AboutCTA";
 
 export const metadata: Metadata = {
   title: { absolute: `About ${SITE_NAME}` },
-  description: `Learn about ${SITE_NAME}, engineering custom SaaS platforms with 3x ROI from Tamil Nadu.`,
+  description: `Learn about ${SITE_NAME}, engineering custom SaaS platforms and enterprise B2B software from Coimbatore.`,
   alternates: { canonical: `${SITE_URL}/about` },
   openGraph: {
     url: `${SITE_URL}/about`,
@@ -27,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-gradient-to-br from-white via-slate-50 to-blue-50 min-h-screen">
+    <div className="bg-transparent min-h-screen">
       <AboutHero />
       <MissionVision />
       <ValuesSection />
