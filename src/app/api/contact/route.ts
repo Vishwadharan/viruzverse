@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/constants";
+import {
+  COMPANY_ADDRESS,
+  CONTACT_EMAIL,
+  SITE_NAME,
+  SITE_URL,
+  WHATSAPP_URL,
+} from "@/lib/constants";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 import { escapeHtml, isValidEmail, sendZeptoEmail } from "@/lib/zeptomail";
 
@@ -60,26 +66,73 @@ export async function POST(req: Request) {
       `,
     });
 
-    // 2. Send automatic confirmation email to the user
+    // 2. Send branded auto-response email to the user
     await sendZeptoEmail({
       to: [{ address: email, name }],
       replyTo: [{ address: CONTACT_EMAIL, name: SITE_NAME }],
       subject: `We received your inquiry — ${SITE_NAME}`,
       htmlbody: `
-        <div style="font-family: Arial, sans-serif; color: #0f172a; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #6d28d9; margin-bottom: 12px;">Thanks for connecting with ${SITE_NAME}, ${safeName}!</h2>
-          <p style="line-height: 1.6; color: #334155;">
-            We&apos;ve received your inquiry regarding <strong>${safeService}</strong> and our team is reviewing your details for your free consultation.
-          </p>
-          <div style="margin: 18px 0; padding: 14px; background: #f5f3ff; border-radius: 8px; color: #334155;">
-            <strong>Your Message:</strong><br/>${safeMessage}
-          </div>
-          <p style="line-height: 1.6; color: #475569; font-size: 13px;">
-            If you&apos;d like to share anything else in the meantime, simply reply to this email or write to us at <a href="mailto:${CONTACT_EMAIL}" style="color: #6d28d9;">${CONTACT_EMAIL}</a>.
-          </p>
-          <p style="margin-top: 24px; font-size: 13px; color: #64748b;">
-            — Viruzverse Solutions Private Limited · <em>Innovation that Flows.</em>
-          </p>
+        <div style="margin:0;padding:24px 12px;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
+            <!-- Header -->
+            <tr>
+              <td style="background-color:#090912;padding:28px 32px;border-bottom:2px solid #7c3aed;">
+                <div style="font-size:20px;font-weight:800;letter-spacing:2px;color:#ffffff;">VIRUZVERSE</div>
+                <div style="font-size:12px;color:#a78bfa;margin-top:4px;font-family:monospace;">Innovation that Flows.</div>
+              </td>
+            </tr>
+
+            <!-- Body -->
+            <tr>
+              <td style="padding:32px;color:#0f172a;">
+                <p style="margin:0 0 12px;font-size:15px;color:#475569;">Hi <strong style="color:#0f172a;">${safeName}</strong>,</p>
+                <h1 style="margin:0 0 14px;font-size:22px;line-height:1.3;color:#0f172a;">We&apos;ve received your inquiry.</h1>
+                <p style="margin:0 0 22px;font-size:14px;line-height:1.65;color:#334155;">
+                  Thank you for connecting with <strong>${SITE_NAME}</strong>. Our team is reviewing your inquiry for your <strong>free business consultation</strong> and will reach out to you shortly.
+                </p>
+
+                <!-- Summary Card -->
+                <div style="background-color:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #7c3aed;border-radius:10px;padding:16px 18px;margin-bottom:24px;">
+                  <div style="font-size:11px;font-family:monospace;text-transform:uppercase;letter-spacing:1px;color:#6d28d9;margin-bottom:10px;font-weight:bold;">
+                    Inquiry Summary
+                  </div>
+                  <p style="margin:0 0 6px;font-size:13px;color:#334155;"><strong>Focus:</strong> ${safeService}</p>
+                  <p style="margin:0 0 10px;font-size:13px;color:#334155;"><strong>Company:</strong> ${safeCompany}</p>
+                  <p style="margin:0;font-size:13px;line-height:1.55;color:#475569;"><strong>Message:</strong><br/>${safeMessage}</p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <table role="presentation" cellspacing="0" cellpadding="0" style="margin-bottom:20px;">
+                  <tr>
+                    <td style="border-radius:10px;background-color:#7c3aed;">
+                      <a href="${SITE_URL}" style="display:inline-block;padding:11px 20px;font-size:13px;font-weight:600;color:#ffffff;text-decoration:none;">
+                        Visit Viruzverse
+                      </a>
+                    </td>
+                    <td style="width:10px;"></td>
+                    <td style="border-radius:10px;border:1px solid #cbd5e1;background-color:#ffffff;">
+                      <a href="${WHATSAPP_URL}" style="display:inline-block;padding:11px 18px;font-size:13px;font-weight:600;color:#0f172a;text-decoration:none;">
+                        Chat on WhatsApp
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:0;font-size:12px;line-height:1.6;color:#64748b;">
+                  Need to add more details? Simply reply to this email or write to <a href="mailto:${CONTACT_EMAIL}" style="color:#6d28d9;text-decoration:none;">${CONTACT_EMAIL}</a>.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="background-color:#f8fafc;padding:20px 32px;border-top:1px solid #e2e8f0;font-size:11px;line-height:1.6;color:#64748b;">
+                <strong style="color:#334155;">Viruzverse Solutions Private Limited</strong><br/>
+                ${COMPANY_ADDRESS}<br/>
+                Solving B2B &amp; B2C problems using emerging technologies.
+              </td>
+            </tr>
+          </table>
         </div>
       `,
     });
