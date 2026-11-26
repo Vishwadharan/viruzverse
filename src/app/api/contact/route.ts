@@ -73,12 +73,29 @@ export async function POST(req: Request) {
       subject: `We received your inquiry — ${SITE_NAME}`,
       htmlbody: `
         <div style="margin:0;padding:24px 12px;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+          <style>
+            @font-face {
+              font-family: 'Mokoto';
+              src: url('${SITE_URL}/fonts/Mokoto.ttf') format('truetype');
+              font-weight: normal;
+              font-style: normal;
+            }
+          </style>
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;">
-            <!-- Header -->
+            <!-- Header (Right-Aligned Logo + Mokoto VIRUZVERSE + Tagline) -->
             <tr>
-              <td style="background-color:#090912;padding:28px 32px;border-bottom:2px solid #7c3aed;">
-                <div style="font-size:20px;font-weight:800;letter-spacing:2px;color:#ffffff;">VIRUZVERSE</div>
-                <div style="font-size:12px;color:#a78bfa;margin-top:4px;font-family:monospace;">Innovation that Flows.</div>
+              <td align="right" style="background-color:#090912;padding:24px 32px;border-bottom:2px solid #7c3aed;">
+                <table role="presentation" cellspacing="0" cellpadding="0" align="right">
+                  <tr>
+                    <td valign="middle" style="padding-right:10px;">
+                      <img src="${SITE_URL}/logo.png" alt="Viruzverse Logo" width="32" height="32" style="display:block;border:0;outline:none;" />
+                    </td>
+                    <td valign="middle" align="right">
+                      <div style="font-family:'Mokoto','Segoe UI',Arial,sans-serif;font-size:21px;font-weight:800;letter-spacing:1.5px;color:#ffffff;line-height:1.1;">VIRUZVERSE</div>
+                      <div style="font-size:11px;color:#a78bfa;margin-top:4px;font-family:monospace;text-align:right;">Innovation that Flows.</div>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
 
