@@ -19,29 +19,42 @@ export default function SpiderWebConnector() {
 
   const triggerWeb = useCallback(
     (startX: number, startY: number) => {
-      const navBtn =
-        document.getElementById("navbar-connect-btn") ||
-        document.getElementById("navbar-mobile-trigger");
+      const desktopBtn = document.getElementById("navbar-connect-btn");
+      const mobileBtn = document.getElementById("navbar-mobile-trigger");
 
-      let endX = window.innerWidth - 96;
-      let endY = 34;
+      const desktopRect = desktopBtn?.getBoundingClientRect();
+      const isDesktopVisible =
+        desktopBtn && desktopRect && desktopRect.width > 0 && desktopRect.height > 0;
 
-      if (navBtn) {
-        const rect = navBtn.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-          endX = rect.left + rect.width / 2;
-          endY = rect.top + rect.height / 2;
-        }
+      const targetEl = isDesktopVisible ? desktopBtn : mobileBtn;
+      const targetRect = targetEl?.getBoundingClientRect();
+
+      let endX = window.innerWidth - 28;
+      let endY = 30;
+
+      if (targetRect && targetRect.width > 0 && targetRect.height > 0) {
+        endX = targetRect.left + targetRect.width / 2;
+        endY = targetRect.top + targetRect.height / 2;
       }
 
       const id = Date.now();
       setShot({ id, startX, startY, endX, endY });
 
       setTimeout(() => {
-        if (navBtn) {
-          navBtn.classList.add("ring-2", "ring-[#D71920]", "shadow-[0_0_24px_rgba(215,25,32,0.75)]", "scale-105");
+        if (targetEl) {
+          targetEl.classList.add(
+            "ring-2",
+            "ring-[#D71920]",
+            "shadow-[0_0_24px_rgba(215,25,32,0.75)]",
+            "scale-105"
+          );
           setTimeout(() => {
-            navBtn.classList.remove("ring-2", "ring-[#D71920]", "shadow-[0_0_24px_rgba(215,25,32,0.75)]", "scale-105");
+            targetEl.classList.remove(
+              "ring-2",
+              "ring-[#D71920]",
+              "shadow-[0_0_24px_rgba(215,25,32,0.75)]",
+              "scale-105"
+            );
           }, 340);
         }
       }, 260);
