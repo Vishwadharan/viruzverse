@@ -10,10 +10,9 @@ import ThemeToggle from "../theme/ThemeToggle";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/products", label: "Products" },
+  { href: "/products/cafeaura", label: "Products" },
   { href: "/about", label: "About" },
   { href: "/careers", label: "Careers" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -64,7 +63,7 @@ export default function Navbar() {
               className="flex items-center gap-2 group transition-transform duration-200 active:scale-95"
               aria-label="Viruzverse Home"
             >
-              <ViruzverseLogo size={34} />
+              <ViruzverseLogo size={30} />
             </Link>
 
             {/* ── Desktop Nav Links ── */}
@@ -79,7 +78,7 @@ export default function Navbar() {
                   <Link
                     key={href}
                     href={href}
-                    className={`relative px-4 py-1.5 text-xs lg:text-[13px] font-mono tracking-wide rounded-full transition-all duration-200 ${
+                    className={`relative px-2.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-mono tracking-wide rounded-full transition-all duration-200 ${
                       isActive
                         ? "text-white bg-violet-600/30 border border-violet-500/50 shadow-[0_0_12px_rgba(167,139,250,0.35)] font-semibold"
                         : "text-slate-400 hover:text-white hover:bg-white/[0.06]"
@@ -91,17 +90,15 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* ── Desktop Actions (Status Pill & CTA) ── */}
-            <div className="hidden md:flex items-center gap-3">
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[11px] font-mono text-slate-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                <span>P99 &lt;120ms</span>
-              </div>
+            {/* ── Desktop Actions (Theme Toggle & CTA) ── */}
+            <div className="hidden md:flex items-center gap-2.5">
+              <ThemeToggle />
               <Link
+                id="navbar-connect-btn"
                 href="/contact"
                 className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 border border-violet-400/30 shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all duration-200 active:scale-95 overflow-hidden"
               >
-                <span className="relative z-10">Start a Project</span>
+                <span className="relative z-10">Connect With Us</span>
                 <ArrowRight
                   size={13}
                   className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5"
@@ -109,9 +106,11 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* ── Mobile Actions (Hamburger) ── */}
+            {/* ── Mobile Actions (Theme Toggle & Hamburger) ── */}
             <div className="flex items-center gap-2 md:hidden">
+              <ThemeToggle />
               <button
+                id="navbar-mobile-trigger"
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -171,11 +170,11 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg transition-all active:scale-98"
               >
-                <span>Start a Project</span>
+                <span>Connect With Us</span>
                 <ArrowRight size={16} />
               </Link>
               <p className="text-center text-xs text-slate-500 font-mono">
-                Coimbatore · Engineered for Scale
+                Coimbatore · Innovation that Flows.
               </p>
             </div>
           </div>

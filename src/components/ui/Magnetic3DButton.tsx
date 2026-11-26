@@ -37,6 +37,15 @@ export default function Magnetic3DButton({
   const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
   if (href) {
+    const isExternal =
+      href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:");
+    if (isExternal) {
+      return (
+        <a href={href} className={combinedClasses} target={target} rel={rel}>
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={combinedClasses} target={target} rel={rel}>
         {children}

@@ -17,12 +17,16 @@ export function ThemeScript() {
   const code = `
     (function() {
       try {
-        // Enforce dark mode as default for the immersive Genesis FX 3D cyber aesthetic
-        document.documentElement.classList.add('dark');
         var stored = localStorage.getItem('viruzverse-theme');
-        if (stored === 'light') {
-          // Reset legacy light flag to default dark
-          localStorage.setItem('viruzverse-theme', 'dark');
+        var isDark = stored === 'light'
+          ? false
+          : stored === 'system'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            : true;
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
         }
       } catch (e) {
         document.documentElement.classList.add('dark');
@@ -39,10 +43,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("viruzverse-theme", "dark");
-    setThemeState("dark");
-    setResolvedTheme("dark");
+    try {
+      const stored = localStorage.getItem("viruzverse-theme") as Theme | null;
+      if (stored === "light" || stored === "dark" || stored === "system") {
+        setThemeState(stored);
+      } else {
+        setThemeState("dark");
+      }
+    } catch {
+      setThemeState("dark");
+    }
   }, []);
 
   useEffect(() => {
@@ -51,7 +61,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
     const updateResolved = () => {
-      let isDark = false;
+      let isDark = true;
       if (theme === "dark") {
         isDark = true;
       } else if (theme === "light") {
@@ -85,7 +95,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(newTheme);
     try {
       localStorage.setItem("viruzverse-theme", newTheme);
-    } catch (e) {
+    } catch {
       // storage unavailable
     }
   };

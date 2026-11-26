@@ -4,6 +4,7 @@ import { ArrowRight, MapPin, Terminal, CheckCircle2, ShieldCheck, Zap } from "lu
 import Magnetic3DButton from "@/components/ui/Magnetic3DButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import ThreeDCyberCore from "@/components/ui/ThreeDCyberCore";
+import { COMPANY_ADDRESS } from "@/lib/constants";
 
 export default function AboutHero() {
   return (
@@ -19,24 +20,24 @@ export default function AboutHero() {
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08] mb-4">
-                We engineer serious <br />
+                We solve B2B &amp; B2C <br />
                 <span className="bg-gradient-to-r from-violet-400 to-indigo-300 bg-clip-text text-transparent">
-                  B2B software &amp; SaaS.
+                  problems &amp; scale businesses.
                 </span>
               </h1>
 
               <p className="text-xs sm:text-base text-slate-400 leading-relaxed max-w-xl mb-6">
-                Engineering-first software company based in Coimbatore, Tamil Nadu. We design and ship custom multi-tenant SaaS platforms, enterprise operations software, and mission-critical cloud backends for businesses worldwide.
+                Engineering-first software company based in Coimbatore, Tamil Nadu. We solve B2B and B2C business problems using emerging technologies and offer a free consultation for business owners to help scale your business.
               </p>
 
               <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-8">
-                <MapPin size={14} className="text-violet-400" />
-                <span>Coimbatore, Tamil Nadu · Global Delivery Across India &amp; Worldwide</span>
+                <MapPin size={14} className="text-violet-400 shrink-0" />
+                <span>{COMPANY_ADDRESS}</span>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
                 <Magnetic3DButton variant="primary" href="/contact">
-                  <span>Start a Project</span>
+                  <span>Connect With Us</span>
                   <ArrowRight size={14} />
                 </Magnetic3DButton>
                 <Magnetic3DButton variant="outline" href="/careers">

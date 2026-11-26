@@ -1,22 +1,21 @@
 "use client";
 
-import Link from "next/link";
 import {
   ArrowRight,
-  ShoppingCart,
-  Package,
-  Printer,
+  Clock,
   Smartphone,
+  BellRing,
+  BarChart3,
 } from "lucide-react";
 import Magnetic3DButton from "@/components/ui/Magnetic3DButton";
 import CafeauraPosSimulator from "@/components/sections/products/CafeauraPosSimulator";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const CAFEAURA_FEATURES = [
-  { icon: ShoppingCart, title: "Sub-150ms High-Volume POS", desc: "Live table billing, split checks, and zero billing bottleneck." },
-  { icon: Printer, title: "Automated KOT Routing", desc: "Orders instantly route and print at kitchen stations with zero delay." },
-  { icon: Package, title: "Recipe-Level Live Inventory", desc: "Automatic ingredient deductions per dish with low-stock alerts." },
-  { icon: Smartphone, title: "Offline-First Mobile App", desc: "Flutter native tablets work uninterrupted during local Wi-Fi drops." },
+  { icon: Smartphone, title: "Pre-Order & Instant UPI", desc: "Students & parents order meals and snacks ahead and pay in one tap via UPI." },
+  { icon: Clock, title: "Prepared Ahead, Zero Rush", desc: "Orders are prepared before break time so students pick up without waiting in line." },
+  { icon: BellRing, title: "Instant Parent Alerts", desc: "Parents receive an immediate notification the moment their child collects the order." },
+  { icon: BarChart3, title: "Simple Daily Reporting", desc: "Shorter queues, smoother canteen service, and clean end-of-day summaries." },
 ];
 
 export default function CafeauraSpotlight() {
@@ -24,29 +23,27 @@ export default function CafeauraSpotlight() {
     <section className="relative py-16 sm:py-20 lg:py-24 bg-transparent overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ScrollReveal>
-          {/* ── Framed Laboratory Container UI (Genesis FX Reference Style) ── */}
           <div className="p-5 sm:p-8 lg:p-12 rounded-3xl border border-white/10 bg-[#090912]/80 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] relative overflow-hidden group">
-            {/* Top Specular Edge Highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               {/* Left Column: Product Spotlight Info */}
               <div className="lg:col-span-6 flex flex-col items-start">
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-violet-950/60 text-violet-300 border border-violet-500/30">
-                    02 // PROPRIETARY OS
+                    FLAGSHIP PRODUCT · CLOSED-COMMUNITY APP
                   </span>
                   <span className="text-xs font-mono text-emerald-400">
-                    Live in Production
+                    Order ahead. Skip the queue.
                   </span>
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-[-0.035em] text-white leading-tight mb-3">
-                  Cafeaura Restaurant OS
+                  CafeAura: Skip the canteen queue.
                 </h2>
 
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
-                  Our in-house flagship vertical SaaS. An all-in-one restaurant management platform powering high-volume dining, automatic kitchen ticketing, real-time recipe inventory, and multi-outlet revenue analytics.
+                  CafeAura is a mobile app that lets students and parents pre-order meals and snacks from their campus canteen and pay instantly by UPI. Orders are prepared ahead and picked up without the rush, and parents get an instant alert when their child collects the order. For canteens, it means smoother service, shorter lines and simple daily reporting.
                 </p>
 
                 {/* 4 Feature modules */}
@@ -69,16 +66,16 @@ export default function CafeauraSpotlight() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <Magnetic3DButton variant="primary" href="/products/cafeaura">
-                    <span>Explore Cafeaura OS</span>
+                    <span>Explore CafeAura</span>
                     <ArrowRight size={14} />
                   </Magnetic3DButton>
                   <Magnetic3DButton variant="outline" href="/contact">
-                    <span>Request Live Demo</span>
+                    <span>Book Campus Demo</span>
                   </Magnetic3DButton>
                 </div>
               </div>
 
-              {/* Right Column: High-End Hardware iPad POS Simulator */}
+              {/* Right Column: Interactive Campus Canteen Simulator */}
               <div className="lg:col-span-6 w-full pt-4 lg:pt-0">
                 <CafeauraPosSimulator />
               </div>

@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import PageLoader from '@/components/ui/PageLoader';
+import SpiderWebConnector from '@/components/ui/SpiderWebConnector';
 import InteractiveBackground from '@/components/ui/InteractiveBackground';
 import { ThemeProvider, ThemeScript } from '@/components/theme/ThemeProvider';
 import {
@@ -26,9 +27,15 @@ const geistMono = localFont({
   display: 'swap',
 });
 
+const mokoto = localFont({
+  src: './fonts/Mokoto.ttf',
+  variable: '--font-mokoto',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_NAME} — B2B Software Engineering`,
+    default: `${SITE_NAME} — B2B & B2C Business Software`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -43,13 +50,13 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — B2B Software Engineering`,
+    title: `${SITE_NAME} — B2B & B2C Business Software`,
     description: SITE_DESCRIPTION,
     images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — B2B Software Engineering`,
+    title: `${SITE_NAME} — B2B & B2C Business Software`,
     description: SITE_DESCRIPTION,
     images: [SITE_OG_IMAGE],
     creator: '@viruzverse',
@@ -72,13 +79,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${mokoto.variable}`} suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>
       <body className="font-sans bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased transition-colors duration-200 relative">
         <ThemeProvider>
           <PageLoader />
+          <SpiderWebConnector />
           <InteractiveBackground />
           <Navbar />
           <main className="min-h-screen relative z-10">

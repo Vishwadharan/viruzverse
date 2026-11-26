@@ -29,10 +29,10 @@ export default function NotFound() {
             <span>Return Home</span>
           </Link>
           <Link
-            href="/services"
+            href="/products/cafeaura"
             className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-[var(--border-subtle)] bg-[var(--bg-card-subtle)] hover:bg-[var(--bg-card-hover)] text-[var(--text-primary)] transition-all"
           >
-            <span>Explore Services</span>
+            <span>Explore Cafeaura</span>
           </Link>
         </div>
       </div>

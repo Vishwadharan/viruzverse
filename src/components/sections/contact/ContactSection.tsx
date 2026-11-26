@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2, AlertCircle, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-import { CONTACT_EMAIL, CONTACT_PHONE, WHATSAPP_URL } from "@/lib/constants";
+import { CONTACT_EMAIL, CONTACT_PHONE, COMPANY_ADDRESS, WHATSAPP_URL } from "@/lib/constants";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-const SERVICES = [
-  "Custom SaaS Engineering",
-  "Enterprise CRM / ERP Systems",
-  "High-Throughput APIs & Cloud",
-  "Edtech Solutions",
-  "Cafeaura Restaurant OS",
+const INQUIRY_TYPES = [
+  "B2B Business Solution",
+  "B2C Product / Platform",
+  "Scale Existing Business",
+  "CafeAura — Campus Canteen App",
   "Other Inquiry",
 ];
 
@@ -28,7 +27,12 @@ export default function ContactSection() {
     e.preventDefault();
     setState("loading");
     try {
-      await new Promise((r) => setTimeout(r, 800));
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Submission failed");
       setState("success");
     } catch {
       setState("error");
@@ -50,7 +54,7 @@ export default function ContactSection() {
                     </div>
                     <h3 className="text-xl font-bold text-white">Message received</h3>
                     <p className="text-xs sm:text-sm text-slate-400 max-w-sm">
-                      Thank you for reaching out. We will review your project details and respond within 24 hours.
+                      Thank you for reaching out. We will review your inquiry and connect with you shortly for your free consultation.
                     </p>
                     <button
                       onClick={() => {
@@ -64,6 +68,15 @@ export default function ContactSection() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    {/* Honeypot anti-spam field */}
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-mono font-medium text-slate-400 mb-1.5">
@@ -75,7 +88,7 @@ export default function ContactSection() {
                           required
                           value={form.name}
                           onChange={handleChange}
-                          placeholder="Arun Kumar"
+                          placeholder="Vishwadharan R"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500 transition-all"
                         />
                       </div>
@@ -89,7 +102,7 @@ export default function ContactSection() {
                           required
                           value={form.email}
                           onChange={handleChange}
-                          placeholder="arun@company.com"
+                          placeholder="vishwadharan@company.com"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500 transition-all"
                         />
                       </div>
@@ -111,7 +124,7 @@ export default function ContactSection() {
                       </div>
                       <div>
                         <label className="block text-xs font-mono font-medium text-slate-400 mb-1.5">
-                          Service Interest
+                          How Can We Help?
                         </label>
                         <select
                           name="service"
@@ -119,8 +132,8 @@ export default function ContactSection() {
                           onChange={handleChange}
                           className="w-full px-3.5 py-2.5 rounded-xl bg-[#090912] border border-white/10 text-xs sm:text-sm text-white focus:outline-none focus:border-violet-500 transition-all"
                         >
-                          <option value="">Select a service category</option>
-                          {SERVICES.map((s) => (
+                          <option value="">Select an option</option>
+                          {INQUIRY_TYPES.map((s) => (
                             <option key={s} value={s}>
                               {s}
                             </option>
@@ -193,7 +206,7 @@ export default function ContactSection() {
                     <MapPin size={16} className="text-violet-400 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-slate-500 text-[10px]">Engineering HQ</p>
-                      <p className="text-white">Coimbatore, Tamil Nadu, India</p>
+                      <p className="text-white">{COMPANY_ADDRESS}</p>
                     </div>
                   </div>
                 </div>

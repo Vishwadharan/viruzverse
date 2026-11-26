@@ -13,6 +13,7 @@ import {
   Mail,
 } from "lucide-react";
 import type { Job } from "@/lib/careers";
+import { CAREERS_EMAIL } from "@/lib/constants";
 
 interface Props {
   job: Job;
@@ -178,7 +179,7 @@ export default function JobDetailPage({ job }: Props) {
             </div>
 
             <a
-              href={`mailto:viruzverse@gmail.com?subject=Application for ${encodeURIComponent(job.title)}`}
+              href={`mailto:${CAREERS_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
               className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold bg-violet-600 hover:bg-violet-500 text-white shadow-lg transition-all active:scale-98"
             >
               <Mail size={16} />

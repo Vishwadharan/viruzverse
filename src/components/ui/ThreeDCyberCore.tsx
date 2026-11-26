@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Cpu, ShieldCheck, Zap, Activity } from "lucide-react";
+import { Activity } from "lucide-react";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface Point3D {
   x: number;
@@ -15,10 +16,11 @@ interface Edge {
 }
 
 export default function ThreeDCyberCore() {
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [activeMetric, setActiveMetric] = useState<string>("Sub-120ms");
   const [isInteracting, setIsInteracting] = useState<boolean>(false);
 
   useEffect(() => {
@@ -356,43 +358,77 @@ export default function ThreeDCyberCore() {
 
       {/* Floating HUD Telemetry Badges */}
       <div className="absolute top-3 left-3 z-20 pointer-events-none">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-black/50 backdrop-blur-md shadow-lg">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-[11px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
-            Cyber Core Active
+        <div
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border backdrop-blur-md shadow-lg ${
+            isLight
+              ? "border-emerald-200 bg-white/90 text-emerald-700"
+              : "border-white/10 bg-[#090912]/80 text-emerald-400"
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+          <span className="text-[11px] font-mono font-bold uppercase tracking-wider">
+            Core Active
           </span>
         </div>
       </div>
 
       <div className="absolute top-3 right-3 z-20 pointer-events-none">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/10 bg-black/50 backdrop-blur-md shadow-lg">
-          <Activity size={12} className="text-violet-400" />
-          <span className="text-[10px] font-mono text-slate-300">
-            60 FPS · 3D Engine
-          </span>
+        <div
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border backdrop-blur-md shadow-lg ${
+            isLight
+              ? "border-violet-200 bg-white/90 text-slate-700"
+              : "border-white/10 bg-[#090912]/80 text-slate-300"
+          }`}
+        >
+          <Activity size={12} className="text-violet-500" />
+          <span className="text-[10px] font-mono">60 FPS · 3D Engine</span>
         </div>
       </div>
 
       {/* Bottom Floating Telemetry Pills */}
       <div className="absolute bottom-4 inset-x-4 z-20 flex flex-wrap items-center justify-center gap-2 pointer-events-none">
-        <div className="px-3 py-1 rounded-full border border-violet-500/30 bg-violet-950/60 backdrop-blur-md text-[10px] font-mono text-violet-200 shadow-md">
-          <span className="text-slate-400">Arch:</span> Zero-Debt Cloud
+        <div
+          className={`px-3 py-1 rounded-full border backdrop-blur-md text-[10px] font-mono shadow-md ${
+            isLight
+              ? "border-violet-200 bg-white/90 text-violet-700"
+              : "border-violet-500/30 bg-violet-950/60 text-violet-200"
+          }`}
+        >
+          <span className="opacity-70">Tech:</span> Emerging Stack
         </div>
-        <div className="px-3 py-1 rounded-full border border-sky-500/30 bg-sky-950/60 backdrop-blur-md text-[10px] font-mono text-sky-200 shadow-md">
-          <span className="text-slate-400">Latency:</span> &lt;120ms
+        <div
+          className={`px-3 py-1 rounded-full border backdrop-blur-md text-[10px] font-mono shadow-md ${
+            isLight
+              ? "border-sky-200 bg-white/90 text-sky-700"
+              : "border-sky-500/30 bg-sky-950/60 text-sky-200"
+          }`}
+        >
+          <span className="opacity-70">Focus:</span> B2B &amp; B2C
         </div>
-        <div className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/60 backdrop-blur-md text-[10px] font-mono text-emerald-200 shadow-md">
-          <span className="text-slate-400">Ownership:</span> 100% Client IP
+        <div
+          className={`px-3 py-1 rounded-full border backdrop-blur-md text-[10px] font-mono shadow-md ${
+            isLight
+              ? "border-emerald-200 bg-white/90 text-emerald-700"
+              : "border-emerald-500/30 bg-emerald-950/60 text-emerald-200"
+          }`}
+        >
+          <span className="opacity-70">Ownership:</span> 100% Client IP
         </div>
       </div>
 
       {/* Interactive Drag Hint */}
       <div
         className={`absolute inset-x-0 bottom-16 text-center z-20 transition-opacity duration-300 pointer-events-none ${
-          isInteracting ? "opacity-0" : "opacity-60"
+          isInteracting ? "opacity-0" : "opacity-75"
         }`}
       >
-        <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 bg-black/40 px-3 py-1 rounded-full border border-white/5">
+        <span
+          className={`text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border ${
+            isLight
+              ? "text-slate-600 bg-white/85 border-slate-200"
+              : "text-slate-400 bg-[#090912]/70 border-white/10"
+          }`}
+        >
           Drag to Rotate 3D Core
         </span>
       </div>
