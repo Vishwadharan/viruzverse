@@ -17,16 +17,16 @@ export default function AboutCTA() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4">
-            Have an enterprise project in mind? Let&apos;s talk.
+            Free consultation for business owners.
           </h2>
 
           <p className="text-xs sm:text-base text-slate-400 leading-relaxed max-w-xl mx-auto mb-8">
-            Whether you need a multi-tenant SaaS built from scratch, high-throughput cloud APIs, or an enterprise operations platform, our engineering team is ready to scope it out.
+            Whether you need a B2B internal system or a B2C platform, we solve problems using emerging technologies to help scale your business.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Magnetic3DButton variant="primary" href="/contact">
-              <span>Start a Project</span>
+              <span>Connect With Us</span>
               <ArrowRight size={14} />
             </Magnetic3DButton>
             <Magnetic3DButton

@@ -17,16 +17,10 @@ export default function ViruzverseLogo({
   textSize,
   text = "Viruzverse",
 }: ViruzverseLogoProps) {
-  const computedTextSize =
-    textSize ||
-    (size >= 44
-      ? "text-[22px] sm:text-[24px]"
-      : size >= 36
-      ? "text-[18px] sm:text-[20px]"
-      : "text-[16px]");
+  const computedFontSize = Math.round(size * 0.72);
 
   return (
-    <div className={`flex items-center gap-2.5 select-none ${className}`}>
+    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
       <div
         className="relative flex items-center justify-center shrink-0 transition-transform duration-200 ease-out group-hover:scale-105"
         style={{
@@ -47,9 +41,10 @@ export default function ViruzverseLogo({
       </div>
       {showText && (
         <span
-          className={`${computedTextSize} font-extrabold tracking-[-0.035em] leading-none transition-colors duration-200 group-hover:text-[var(--accent)] antialiased`}
+          className={`${textSize || ""} font-mokoto tracking-[0.04em] leading-none translate-y-[1px] transition-colors duration-200 group-hover:text-[var(--accent)] antialiased`}
           style={{
             color: textColor || "var(--text-primary)",
+            ...(textSize ? {} : { fontSize: `${computedFontSize}px` }),
           }}
         >
           {text}

@@ -4,14 +4,12 @@ import React from "react";
 import { Zap, ShieldCheck, Cpu, Database, Server, RefreshCw, CheckCircle2, Flame } from "lucide-react";
 
 const TICKER_ITEMS = [
-  { icon: Zap, label: "MULTI-TENANT SAAS ARCHITECTURE", highlight: "SUB-100MS P99" },
-  { icon: Flame, label: "FLAGSHIP: CAFEAURA RESTAURANT OS", highlight: "v2.4 ACTIVE" },
-  { icon: Database, label: "POSTGRESQL ROW-LEVEL SECURITY", highlight: "ZERO LEAKAGE" },
-  { icon: RefreshCw, label: "OFFLINE-FIRST SQLITE RECONCILIATION", highlight: "FAIL-SAFE" },
-  { icon: Server, label: "HIGH-THROUGHPUT REST & WEBSOCKET APIS", highlight: "99.99% SLA" },
-  { icon: ShieldCheck, label: "100% PROPRIETARY CLIENT IP HANDOVER", highlight: "FULL CODEBASE" },
-  { icon: Cpu, label: "EVENT-DRIVEN BACKGROUND WORKERS", highlight: "REDIS QUEUES" },
-  { icon: CheckCircle2, label: "BI-WEEKLY SPRINT PRODUCTION SHIPMENTS", highlight: "FIXED MILESTONES" },
+  { icon: Zap, label: "VIRUZVERSE", highlight: "INNOVATION THAT FLOWS" },
+  { icon: Flame, label: "CAFEAURA: SKIP THE CANTEEN QUEUE", highlight: "CAMPUS APP" },
+  { icon: Database, label: "B2B & B2C PROBLEM SOLVING", highlight: "BUILT TO SCALE" },
+  { icon: RefreshCw, label: "ORDER AHEAD & PAY BY UPI", highlight: "ZERO RUSH PICKUP" },
+  { icon: Server, label: "INSTANT PARENT PICKUP ALERTS", highlight: "REAL-TIME" },
+  { icon: ShieldCheck, label: "100% PROPRIETARY CLIENT IP", highlight: "FULL OWNERSHIP" },
 ];
 
 export default function LiveTickerRibbon() {

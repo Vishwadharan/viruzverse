@@ -4,221 +4,165 @@ import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
-  Layers,
-  Users,
-  Server,
-  Puzzle,
-  Sparkles,
-  Database,
-  Lock,
-  Workflow,
-  CheckCircle2,
+  Briefcase,
+  Globe,
+  Cpu,
+  TrendingUp,
 } from "lucide-react";
 import TiltCard3D from "@/components/ui/TiltCard3D";
 import Magnetic3DButton from "@/components/ui/Magnetic3DButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+const CARDS = [
+  {
+    id: "SYS.01",
+    tag: "B2B SOLUTIONS",
+    title: "Automate & Eliminate Friction",
+    desc: "Custom internal tools & emerging-tech workflows built around how your business operates.",
+    chips: ["Emerging Tech", "Workflows", "100% Your IP"],
+    cta: "Solve B2B Problem",
+    icon: Briefcase,
+    accent: "violet",
+  },
+  {
+    id: "SYS.02",
+    tag: "B2C & SCALING",
+    title: "Launch & Scale at Velocity",
+    desc: "High-speed web & mobile platforms engineered to handle real customer traffic and growth.",
+    chips: ["Web & Mobile", "High-Traffic", "Zero Downtime"],
+    cta: "Scale Your Business",
+    icon: Globe,
+    accent: "emerald",
+  },
+] as const;
+
 export default function ServicesSection() {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 bg-transparent overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
+    <section className="relative py-10 sm:py-14 bg-transparent overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Compact Header */}
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 sm:mb-14">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium border border-violet-500/30 bg-violet-950/40 text-violet-300 mb-3 shadow-xs backdrop-blur-md">
-                <Sparkles size={12} />
-                <span>B2B Engineering Capabilities</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-[-0.035em] text-white leading-tight mb-3">
-                Software built around your business.
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
-                We design and ship high-performance software engineered to replace clunky legacy tools.
-              </p>
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-[-0.04em] text-white leading-none">
+              HOW WE SOLVE ?
+            </h2>
 
-            <div className="shrink-0">
-              <Magnetic3DButton variant="outline" href="/services">
-                <span>View All Capabilities</span>
-                <ArrowRight size={14} />
-              </Magnetic3DButton>
-            </div>
+            <Magnetic3DButton variant="outline" href="/contact">
+              <span>Book Free Consultation</span>
+              <ArrowRight size={14} />
+            </Magnetic3DButton>
           </div>
         </ScrollReveal>
 
-        {/* 3D Perspective Tilt Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Card 1: Featured 2-col span: Custom SaaS */}
-          <ScrollReveal delay={100} className="md:col-span-2">
-            <TiltCard3D className="p-6 sm:p-8 flex flex-col justify-between h-full">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-400 flex items-center justify-center">
-                    <Layers size={18} strokeWidth={2} />
+        {/* Sleek Compact Futuristic Tiles */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {CARDS.map((card, idx) => {
+            const Icon = card.icon;
+            const isViolet = card.accent === "violet";
+
+            return (
+              <ScrollReveal key={card.id} delay={idx * 90}>
+                <TiltCard3D className="group relative overflow-hidden p-5 sm:p-6 flex flex-col justify-between h-full">
+                  {/* Top Neon Laser Line */}
+                  <div
+                    className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent ${
+                      isViolet ? "via-violet-500" : "via-emerald-400"
+                    } to-transparent opacity-80 group-hover:opacity-100 transition-opacity`}
+                  />
+
+                  {/* Corner Ambient Aura */}
+                  <div
+                    className="pointer-events-none absolute -top-16 -right-16 w-44 h-44 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500 blur-2xl"
+                    style={{
+                      background: isViolet
+                        ? "radial-gradient(circle, #8b5cf6 0%, transparent 70%)"
+                        : "radial-gradient(circle, #10b981 0%, transparent 70%)",
+                    }}
+                  />
+
+                  {/* Futuristic HUD Corner Brackets */}
+                  <span
+                    className={`pointer-events-none absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t border-l ${
+                      isViolet ? "border-violet-400/50" : "border-emerald-400/50"
+                    }`}
+                  />
+                  <span
+                    className={`pointer-events-none absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b border-r ${
+                      isViolet ? "border-violet-400/50" : "border-emerald-400/50"
+                    }`}
+                  />
+
+                  <div className="relative z-10">
+                    {/* Top HUD Bar */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2.5">
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center border ${
+                            isViolet
+                              ? "bg-violet-500/15 border-violet-400/30 text-violet-300 shadow-[0_0_16px_rgba(139,92,246,0.25)]"
+                              : "bg-emerald-500/15 border-emerald-400/30 text-emerald-300 shadow-[0_0_16px_rgba(16,185,129,0.25)]"
+                          }`}
+                        >
+                          <Icon size={16} strokeWidth={2} />
+                        </div>
+                        <span className="text-[10px] font-mono tracking-widest text-slate-400">
+                          {card.id} //{" "}
+                          <span className={isViolet ? "text-violet-300 font-bold" : "text-emerald-300 font-bold"}>
+                            {card.tag}
+                          </span>
+                        </span>
+                      </div>
+
+                      <span
+                        className={`w-2 h-2 rounded-full animate-pulse ${
+                          isViolet
+                            ? "bg-violet-400 shadow-[0_0_8px_#a78bfa]"
+                            : "bg-emerald-400 shadow-[0_0_8px_#34d399]"
+                        }`}
+                      />
+                    </div>
+
+                    {/* Title & Concise Copy */}
+                    <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-1.5">
+                      {card.title}
+                    </h3>
+                    <p className="text-xs sm:text-[13px] text-slate-400 leading-relaxed mb-4">
+                      {card.desc}
+                    </p>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-950/60 text-violet-300 border border-violet-500/30">
-                    CORE EXPERTISE
-                  </span>
-                </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
-                  Custom Multi-Tenant SaaS Engineering
-                </h3>
+                  {/* Compact Bottom Row: Tech Chips + Action */}
+                  <div className="relative z-10 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {card.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/10 text-[10px] font-mono text-slate-300"
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
 
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-xl mb-6">
-                  From database schema to production. Complete SaaS architecture featuring PostgreSQL Row-Level Security, automated tenant subdomains, Stripe subscription billing, and enterprise role permissions.
-                </p>
-
-                {/* Architectural Spec Pills */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 font-mono text-xs">
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-1.5 sm:gap-2">
-                    <Lock size={12} className="text-violet-400 shrink-0" />
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-200">RBAC Auth</span>
-                  </div>
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-1.5 sm:gap-2">
-                    <Database size={12} className="text-violet-400 shrink-0" />
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-200">Postgres RLS</span>
-                  </div>
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-1.5 sm:gap-2">
-                    <Workflow size={12} className="text-violet-400 shrink-0" />
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-200">Stripe Billing</span>
-                  </div>
-                  <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-1.5 sm:gap-2">
-                    <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-200">Sub-40ms APIs</span>
-                  </div>
-                </div>
-              </div>
-
-              <Link
-                href="/services/custom-saas"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-300 hover:text-white hover:underline pt-4 border-t border-white/10 mt-5"
-              >
-                <span>Explore Multi-Tenant SaaS Engineering</span>
-                <ArrowUpRight size={13} />
-              </Link>
-            </TiltCard3D>
-          </ScrollReveal>
-
-          {/* Card 2: Enterprise ERP & CRM */}
-          <ScrollReveal delay={180}>
-            <TiltCard3D className="p-6 sm:p-7 flex flex-col justify-between h-full">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-400 flex items-center justify-center mb-4">
-                  <Users size={18} strokeWidth={2} />
-                </div>
-
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-2">
-                  Tailored CRM &amp; ERP
-                </h3>
-
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
-                  Replace generic, bloated legacy software with tailored internal tools. Precise warehouse logic, deal pipelines, and automated invoicing with zero per-seat fees.
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {["Warehouse Ops", "Deal Pipelines", "Zero Seat Fees"].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.03] border border-white/10 text-slate-300"
+                    <Link
+                      href="/contact"
+                      className={`inline-flex items-center gap-1 text-xs font-mono font-semibold transition-all group/link ${
+                        isViolet
+                          ? "text-violet-300 hover:text-white"
+                          : "text-emerald-300 hover:text-white"
+                      }`}
                     >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                href="/services/crm-erp"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-300 hover:text-white hover:underline pt-3 border-t border-white/10 mt-3"
-              >
-                <span>Explore CRM &amp; ERP Platforms</span>
-                <ArrowUpRight size={13} />
-              </Link>
-            </TiltCard3D>
-          </ScrollReveal>
-
-          {/* Card 3: Cloud Infrastructure & APIs */}
-          <ScrollReveal delay={240}>
-            <TiltCard3D className="p-6 sm:p-7 flex flex-col justify-between h-full">
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-400 flex items-center justify-center mb-4">
-                  <Server size={18} strokeWidth={2} />
-                </div>
-
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-white mb-2">
-                  High-Throughput APIs &amp; Cloud
-                </h3>
-
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
-                  Engineered for sub-120ms P99 responses. Distributed Redis queues, WebSocket streaming, and containerized Docker/Kubernetes deployments.
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {["Redis Queues", "WebSockets", "Sub-120ms P99"].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/[0.03] border border-white/10 text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                href="/services/ai-automation"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-300 hover:text-white hover:underline pt-3 border-t border-white/10 mt-3"
-              >
-                <span>Explore Cloud Architecture</span>
-                <ArrowUpRight size={13} />
-              </Link>
-            </TiltCard3D>
-          </ScrollReveal>
-
-          {/* Card 4: 2-col span: Custom Engineering */}
-          <ScrollReveal delay={300} className="md:col-span-2">
-            <TiltCard3D className="p-6 sm:p-8 flex flex-col justify-between h-full">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-400 flex items-center justify-center">
-                    <Puzzle size={18} strokeWidth={2} />
+                      <span>{card.cta}</span>
+                      <ArrowUpRight
+                        size={13}
+                        className="transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                      />
+                    </Link>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white/[0.03] text-slate-400 border border-white/10">
-                    BESPOKE ENGINEERING
-                  </span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white mb-2">
-                  Legacy Modernization &amp; Custom Systems
-                </h3>
-
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-xl mb-4">
-                  Refactoring complex monolithic codebases into high-velocity modern stacks. Custom hardware bridges, specialized ERP plugins, and 100% intellectual property ownership transfer.
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-2">
-                  {["Zero Monolith Debt", "Automated CI/CD", "100% Code Ownership"].map((t) => (
-                    <span
-                      key={t}
-                      className="px-2.5 py-1 rounded-lg text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300"
-                    >
-                      ✓ {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                href="/services/custom-projects"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-300 hover:text-white hover:underline pt-4 border-t border-white/10 mt-5"
-              >
-                <span>Explore Custom Projects</span>
-                <ArrowUpRight size={13} />
-              </Link>
-            </TiltCard3D>
-          </ScrollReveal>
+                </TiltCard3D>
+              </ScrollReveal>
+            );
+          })}
         </div>
       </div>
     </section>

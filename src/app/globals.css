@@ -1,33 +1,33 @@
 @import "tailwindcss";
 
-/* ── 60-30-10 Brand Tokens (Obsidian Dark Cyber by Default - Genesis FX Markets Aesthetic) ───────────────────── */
+/* ── 60-30-10 Brand Tokens (Crisp Light Mode Base + Obsidian Dark Cyber) ───────────────────── */
 :root {
-  /* 60% Dominant Canvas & Surfaces (Deep OLED Space Black) */
-  --bg-canvas: #050508;
-  --bg-surface: #090910;
-  --bg-card: #0d0d17;
-  --bg-card-subtle: #121220;
-  --bg-card-hover: #18182a;
+  /* 60% Dominant Canvas & Surfaces (Clean Daylight) */
+  --bg-canvas: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f1f5f9;
+  --bg-card-hover: #e2e8f0;
 
-  /* 30% Structure & Content (High Contrast Slate & Crisp White) */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  /* 30% Structure & Content */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --text-muted: #64748b;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(167, 139, 250, 0.28);
+  --border-subtle: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(124, 58, 237, 0.32);
 
-  /* 10% Accent (Luminous Electric Violet - Subtle & Focused) */
-  --accent: #a78bfa;
-  --accent-hover: #c4b5fd;
-  --accent-light: rgba(167, 139, 250, 0.12);
-  --accent-glow: rgba(167, 139, 250, 0.12);
-  --accent-glow-strong: rgba(167, 139, 250, 0.22);
+  /* 10% Accent (Electric Violet) */
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-light: rgba(124, 58, 237, 0.1);
+  --accent-glow: rgba(124, 58, 237, 0.12);
+  --accent-glow-strong: rgba(124, 58, 237, 0.22);
 
-  --glass-bg: rgba(10, 10, 18, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --grid-line: rgba(167, 139, 250, 0.03);
-  --selection-bg: #5b21b6;
-  --selection-color: #f5f3ff;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --grid-line: rgba(124, 58, 237, 0.05);
+  --selection-bg: #7c3aed;
+  --selection-color: #ffffff;
 }
 
 .dark {
@@ -71,13 +71,18 @@
   body {
     background-color: var(--bg-canvas);
     color: var(--text-primary);
-    font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+    font-family: var(--font-geist-mono), var(--font-geist-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100dvh;
     position: relative;
     overflow-x: hidden;
-    letter-spacing: -0.011em;
+    letter-spacing: -0.02em;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-geist-mono), var(--font-geist-sans), monospace;
+    letter-spacing: -0.03em;
   }
 
   code, kbd, samp, pre {
@@ -221,4 +226,113 @@
 /* Genesis FX glowing beam text */
 .glow-text-violet {
   text-shadow: 0 0 20px rgba(167, 139, 250, 0.45);
+}
+
+.font-mokoto {
+  font-family: var(--font-mokoto), var(--font-geist-sans), sans-serif;
+}
+
+/* ── Global Light Mode Adaptive Overrides (when .dark is not on <html>) ── */
+html:not(.dark) .text-white {
+  color: #0f172a;
+}
+
+/* Keep white text inside solid/gradient primary CTA buttons & dark badges */
+html:not(.dark) .bg-violet-600,
+html:not(.dark) .bg-violet-600 *,
+html:not(.dark) .from-violet-600,
+html:not(.dark) .from-violet-600 *,
+html:not(.dark) .from-orange-500,
+html:not(.dark) .from-orange-500 *,
+html:not(.dark) .from-amber-400,
+html:not(.dark) .from-amber-400 *,
+html:not(.dark) .bg-emerald-600,
+html:not(.dark) .bg-emerald-600 * {
+  color: #ffffff;
+}
+
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200 {
+  color: #1e293b;
+}
+
+html:not(.dark) .text-slate-300 {
+  color: #334155;
+}
+
+html:not(.dark) .text-slate-400 {
+  color: #475569;
+}
+
+html:not(.dark) .text-slate-500 {
+  color: #64748b;
+}
+
+html:not(.dark) .text-violet-300 {
+  color: #6d28d9;
+}
+
+html:not(.dark) .text-violet-400 {
+  color: #7c3aed;
+}
+
+html:not(.dark) .text-emerald-300,
+html:not(.dark) .text-emerald-400 {
+  color: #059669;
+}
+
+/* Light surfaces & borders */
+html:not(.dark) .bg-\[\#06060a\],
+html:not(.dark) .bg-\[\#090912\],
+html:not(.dark) .bg-\[\#090912\]\/85,
+html:not(.dark) .bg-\[\#090912\]\/80,
+html:not(.dark) .bg-\[\#090912\]\/70,
+html:not(.dark) .bg-\[\#0d0d17\],
+html:not(.dark) .bg-\[\#0d0d17\]\/90,
+html:not(.dark) .bg-\[\#0d0d17\]\/80,
+html:not(.dark) .bg-\[\#0d0f17\],
+html:not(.dark) .bg-\[\#0b0d14\],
+html:not(.dark) .bg-\[\#08090e\],
+html:not(.dark) .bg-\[\#0d0d1a\] {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+
+html:not(.dark) .bg-black\/40 {
+  background-color: rgba(241, 245, 249, 0.9);
+}
+
+html:not(.dark) .bg-white\/\[0\.03\],
+html:not(.dark) .bg-white\/\[0\.04\],
+html:not(.dark) .bg-white\/\[0\.05\],
+html:not(.dark) .bg-white\/\[0\.06\] {
+  background-color: rgba(15, 23, 42, 0.04);
+}
+
+html:not(.dark) .bg-violet-950\/40,
+html:not(.dark) .bg-violet-950\/60 {
+  background-color: rgba(124, 58, 237, 0.09);
+}
+
+html:not(.dark) .bg-emerald-950\/60 {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-slate-800,
+html:not(.dark) .border-slate-800\/80 {
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+/* Light mode gradient headings */
+html:not(.dark) .bg-clip-text.text-transparent {
+  filter: saturate(1.2) brightness(0.72);
+}
+
+/* Smooth circular View Transition for Theme Switcher */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

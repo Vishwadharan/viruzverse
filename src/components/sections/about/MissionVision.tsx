@@ -43,10 +43,10 @@ export default function MissionVision() {
                   <span>OUR MISSION</span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 leading-snug">
-                  Democratize enterprise-grade software engineering.
+                  Solve real B2B &amp; B2C problems with clean software.
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
-                  We replace clunky legacy software with tailored, high-velocity SaaS and enterprise platforms engineered specifically around your company&apos;s operational workflow.
+                  We replace manual workarounds and rigid legacy tools with tailored B2B &amp; B2C software built around how your business operates and grows.
                 </p>
               </div>
 

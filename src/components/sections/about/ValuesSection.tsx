@@ -23,16 +23,16 @@ const VALUES: ValueItem[] = [
   {
     icon: Gauge,
     num: "02",
-    label: "Zero Lag, Pure Performance",
-    desc: "Laggy software is broken software. Sub-second TTFB, optimized DB queries, and 60fps micro-interactions.",
-    tags: ["Sub-50ms APIs", "Memory Profiling", "Zero Bloat"],
+    label: "Built to Scale",
+    desc: "We solve bottlenecks using emerging technologies so your B2B or B2C platform stays fast as you grow.",
+    tags: ["Emerging Tech", "High Reliability", "Zero Bloat"],
   },
   {
     icon: HeartHandshake,
     num: "03",
-    label: "Direct Developer Access",
-    desc: "No account manager layers. Direct Slack communication with the engineers building your platform.",
-    tags: ["Direct Slack", "Weekly Demos", "Transparent"],
+    label: "Direct Team Access",
+    desc: "No middleman layers. Free consultation for business owners and direct collaboration with our engineers.",
+    tags: ["Free Consult", "Clear Milestones", "Transparent"],
   },
 ];
 

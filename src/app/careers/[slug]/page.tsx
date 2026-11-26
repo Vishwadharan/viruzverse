@@ -3,14 +3,15 @@ import { notFound } from "next/navigation";
 import { JOBS } from "@/lib/careers";
 import JobDetailPage from "@/components/sections/careers/JobDetailPage";
 
-interface Props { params: { slug: string } }
+interface Props { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   return JOBS.map((job) => ({ slug: job.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const job = JOBS.find((j) => j.slug === params.slug);
+  const { slug } = await params;
+  const job = JOBS.find((j) => j.slug === slug);
   if (!job) return {};
   return {
     title: job.title,
@@ -18,8 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function CareerDetailPage({ params }: Props) {
-  const job = JOBS.find((j) => j.slug === params.slug);
+export default async function CareerDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const job = JOBS.find((j) => j.slug === slug);
   if (!job) notFound();
   return <JobDetailPage job={job} />;
 }
