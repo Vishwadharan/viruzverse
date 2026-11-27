@@ -88,7 +88,7 @@ export default function ContactSection() {
                           required
                           value={form.name}
                           onChange={handleChange}
-                          placeholder="Vishwadharan R"
+                          placeholder="Your Good Name"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500 transition-all"
                         />
                       </div>
@@ -102,7 +102,7 @@ export default function ContactSection() {
                           required
                           value={form.email}
                           onChange={handleChange}
-                          placeholder="vishwadharan@company.com"
+                          placeholder="name@company.com"
                           className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-violet-500 transition-all"
                         />
                       </div>

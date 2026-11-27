@@ -38,8 +38,8 @@ export default function ScrollReveal({
         });
       },
       {
-        threshold: 0.1,
-        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.05,
+        rootMargin: "0px 0px 40px 0px",
       }
     );
 
@@ -54,17 +54,17 @@ export default function ScrollReveal({
     if (isVisible) return "opacity-100 translate-x-0 translate-y-0 scale-100";
     switch (direction) {
       case "up":
-        return "opacity-0 translate-y-8";
+        return "opacity-0 translate-y-5";
       case "down":
-        return "opacity-0 -translate-y-8";
+        return "opacity-0 -translate-y-5";
       case "left":
-        return "opacity-0 translate-x-8";
+        return "opacity-0 translate-x-5";
       case "right":
-        return "opacity-0 -translate-x-8";
+        return "opacity-0 -translate-x-5";
       case "none":
         return "opacity-0";
       default:
-        return "opacity-0 translate-y-8";
+        return "opacity-0 translate-y-5";
     }
   };
 
@@ -72,11 +72,11 @@ export default function ScrollReveal({
     <div
       ref={ref}
       style={{
-        transitionDuration: "700ms",
-        transitionDelay: `${delay}ms`,
+        transitionDuration: "420ms",
+        transitionDelay: `${Math.min(delay, 180)}ms`,
         transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className={`transition-all ${getDirectionClass()} ${className}`}
+      className={`transition-[opacity,transform] ${getDirectionClass()} ${className}`}
     >
       {children}
     </div>

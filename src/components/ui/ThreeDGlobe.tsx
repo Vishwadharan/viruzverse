@@ -137,7 +137,16 @@ export default function ThreeDGlobe() {
     if (!ctx) return;
 
     let animId: number;
-    const dpr = window.devicePixelRatio || 1;
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const isMobile = window.innerWidth < 640;
     const isLaptop = window.innerWidth < 1280;
@@ -223,6 +232,8 @@ export default function ThreeDGlobe() {
     };
 
     const render = () => {
+      animId = requestAnimationFrame(render);
+      if (!isVisible || document.hidden) return;
       tick += 0.015;
 
       if (!isDraggingRef.current) {
@@ -444,14 +455,13 @@ export default function ThreeDGlobe() {
           ctx.shadowBlur = 0;
         }
       });
-
-      animId = requestAnimationFrame(render);
     };
 
     render();
 
     return () => {
       cancelAnimationFrame(animId);
+      observer.disconnect();
       clearInterval(hubTimer);
       canvas.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mousemove", handleMouseMove);

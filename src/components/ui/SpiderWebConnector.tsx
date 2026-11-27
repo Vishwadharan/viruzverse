@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface WebShot {
   id: number;
@@ -15,6 +16,8 @@ interface WebShot {
 export default function SpiderWebConnector() {
   const router = useRouter();
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
   const [shot, setShot] = useState<WebShot | null>(null);
 
   const triggerWeb = useCallback(
@@ -42,19 +45,13 @@ export default function SpiderWebConnector() {
 
       setTimeout(() => {
         if (targetEl) {
-          targetEl.classList.add(
-            "ring-2",
-            "ring-[#D71920]",
-            "shadow-[0_0_24px_rgba(215,25,32,0.75)]",
-            "scale-105"
-          );
+          const ringClass = isLight ? "ring-[#0f172a]" : "ring-white";
+          const shadowClass = isLight
+            ? "shadow-[0_0_20px_rgba(15,23,42,0.45)]"
+            : "shadow-[0_0_20px_rgba(255,255,255,0.65)]";
+          targetEl.classList.add("ring-2", ringClass, shadowClass, "scale-105");
           setTimeout(() => {
-            targetEl.classList.remove(
-              "ring-2",
-              "ring-[#D71920]",
-              "shadow-[0_0_24px_rgba(215,25,32,0.75)]",
-              "scale-105"
-            );
+            targetEl.classList.remove("ring-2", ringClass, shadowClass, "scale-105");
           }, 340);
         }
       }, 260);
@@ -64,7 +61,7 @@ export default function SpiderWebConnector() {
         setTimeout(() => setShot(null), 200);
       }, 500);
     },
-    [router]
+    [router, isLight]
   );
 
   useEffect(() => {
@@ -149,9 +146,9 @@ export default function SpiderWebConnector() {
         <svg className="w-full h-full">
           <defs>
             <linearGradient id="elegantWebGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#D71920" stopOpacity="0.75" />
-              <stop offset="50%" stopColor="#DF1F2D" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#FF0000" stopOpacity="1" />
+              <stop offset="0%" stopColor={isLight ? "#000000" : "#ffffff"} stopOpacity="0.6" />
+              <stop offset="50%" stopColor={isLight ? "#0f172a" : "#ffffff"} stopOpacity="0.9" />
+              <stop offset="100%" stopColor={isLight ? "#000000" : "#ffffff"} stopOpacity="1" />
             </linearGradient>
           </defs>
 
@@ -175,7 +172,7 @@ export default function SpiderWebConnector() {
               y1={s.y1}
               x2={s.x2}
               y2={s.y2}
-              stroke="rgba(215, 25, 32, 0.55)"
+              stroke={isLight ? "rgba(0, 0, 0, 0.55)" : "rgba(255, 255, 255, 0.55)"}
               strokeWidth="0.9"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 0.8 }}
@@ -189,7 +186,7 @@ export default function SpiderWebConnector() {
               key={i}
               d={d}
               fill="none"
-              stroke="rgba(223, 31, 45, 0.6)"
+              stroke={isLight ? "rgba(0, 0, 0, 0.6)" : "rgba(255, 255, 255, 0.6)"}
               strokeWidth="0.9"
               initial={{ scale: 0.4, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.85 }}
@@ -203,7 +200,7 @@ export default function SpiderWebConnector() {
             cx={shot.endX}
             cy={shot.endY}
             r="3.2"
-            fill="#D92B20"
+            fill={isLight ? "#000000" : "#ffffff"}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: [0, 1.4, 1], opacity: [0, 0.95, 0.8] }}
             transition={{ duration: 0.2, delay: 0.24 }}

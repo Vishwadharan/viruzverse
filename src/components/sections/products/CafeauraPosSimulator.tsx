@@ -441,7 +441,7 @@ export default function CafeauraPosSimulator() {
                             isLight ? "text-slate-700" : "text-slate-200"
                           }`}
                         >
-                          <strong>Viha</strong> picked up Order <strong>#CA-104</strong> from the campus canteen.
+                          <strong>Cafeaura user</strong> picked up Order <strong>#CA-104</strong> from the campus canteen.
                         </p>
                       </div>
 

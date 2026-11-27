@@ -30,6 +30,15 @@ export default function ThreeDCyberCore() {
     if (!ctx) return;
 
     let animId: number;
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
+
     let width = (canvas.width = canvas.parentElement?.clientWidth || 520);
     let height = (canvas.height = canvas.parentElement?.clientHeight || 520);
 
@@ -185,6 +194,8 @@ export default function ThreeDCyberCore() {
 
     // ── Render Loop ──────────────────────────────────────────
     const render = () => {
+      animId = requestAnimationFrame(render);
+      if (!isVisible || document.hidden) return;
       tick += 0.015;
 
       if (!isDragging) {
@@ -298,8 +309,6 @@ export default function ThreeDCyberCore() {
         ctx.lineTo(p2.x, p2.y);
         ctx.strokeStyle = `rgba(167, 139, 250, ${alpha})`;
         ctx.lineWidth = normZ > 0.5 ? 1.5 : 0.8;
-        ctx.shadowBlur = normZ > 0.6 ? 6 : 0;
-        ctx.shadowColor = "rgba(167, 139, 250, 0.6)";
         ctx.stroke();
       }
       ctx.restore();
@@ -314,10 +323,7 @@ export default function ThreeDCyberCore() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(245, 243, 255, ${alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = "rgba(167, 139, 250, 0.8)";
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
       // Draw Inner Core Vertices
@@ -327,14 +333,13 @@ export default function ThreeDCyberCore() {
         ctx.fillStyle = "#38bdf8";
         ctx.fill();
       }
-
-      animId = requestAnimationFrame(render);
     };
 
     render();
 
     return () => {
       cancelAnimationFrame(animId);
+      observer.disconnect();
       window.removeEventListener("resize", handleResize);
       cElem.removeEventListener("mousedown", onPointerDown);
       cElem.removeEventListener("touchstart", onPointerDown);

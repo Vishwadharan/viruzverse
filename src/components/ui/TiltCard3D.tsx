@@ -15,19 +15,18 @@ export default function TiltCard3D({
   ...props
 }: TiltCard3DProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
   const rawId = useId();
   const patternId = `circuit-${rawId.replace(/:/g, "")}`;
   const [isTouch, setIsTouch] = useState(false);
-  const [spotlight, setSpotlight] = useState({
-    x: "50%",
-    y: "50%",
-    opacity: 0,
-  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsTouch(window.matchMedia("(hover: none)").matches || window.innerWidth < 768);
     }
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -36,37 +35,41 @@ export default function TiltCard3D({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    setSpotlight({
-      x: `${x}px`,
-      y: `${y}px`,
-      opacity: 1,
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current) return;
+      cardRef.current.style.setProperty("--mx", `${x}px`);
+      cardRef.current.style.setProperty("--my", `${y}px`);
+      cardRef.current.style.setProperty("--mo", "1");
     });
   };
 
   const handleMouseLeave = () => {
-    if (isTouch) return;
-    setSpotlight((prev) => ({ ...prev, opacity: 0 }));
+    if (isTouch || !cardRef.current) return;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    cardRef.current.style.setProperty("--mo", "0");
   };
 
-  const maskGradient = `radial-gradient(240px circle at ${spotlight.x} ${spotlight.y}, black 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%)`;
+  const maskGradient =
+    "radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), black 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%)";
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d17]/90 shadow-xl transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-violet-400/50 hover:shadow-[0_16px_40px_-10px_rgba(124,58,237,0.3)] ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d17]/90 shadow-xl transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-violet-400/50 hover:shadow-[0_16px_40px_-10px_rgba(124,58,237,0.3)] ${className}`}
       {...props}
     >
       {/* Top Glass Specular Reflection Highlight */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
-      {/* Hidden Electronic Circuit Background — Subtle Reveal on Hover */}
+      {/* Hidden Electronic Circuit Background — Zero-Re-render CSS Var Reveal */}
       {!isTouch && (
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-200"
           style={{
-            opacity: spotlight.opacity * 0.35,
+            opacity: "calc(var(--mo, 0) * 0.35)",
             maskImage: maskGradient,
             WebkitMaskImage: maskGradient,
           }}
@@ -80,7 +83,6 @@ export default function TiltCard3D({
                 height="80"
                 patternUnits="userSpaceOnUse"
               >
-                {/* PCB Copper/Violet Traces */}
                 <path
                   d="M0 20 H24 L36 32 H60 M20 0 V14 L28 22 M80 56 H56 L44 44 H16 M60 80 V62 L52 54 M12 80 V52 L22 42 H34"
                   fill="none"
@@ -89,7 +91,6 @@ export default function TiltCard3D({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                {/* Secondary Cyan Micro-Traces */}
                 <path
                   d="M44 0 V18 L54 28 H80 M0 64 H18 L28 74 V80"
                   fill="none"
@@ -98,7 +99,6 @@ export default function TiltCard3D({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                {/* Glowing Solder Pads / IC Nodes */}
                 <circle cx="60" cy="32" r="2.2" fill="#a78bfa" />
                 <circle cx="16" cy="44" r="2.2" fill="#38bdf8" />
                 <circle cx="34" cy="42" r="2" fill="#34d399" />
@@ -124,10 +124,10 @@ export default function TiltCard3D({
       {/* Soft Cursor-Tracking Ambient Glow */}
       {!isTouch && (
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-200"
           style={{
-            background: `radial-gradient(280px circle at ${spotlight.x} ${spotlight.y}, ${glowColor}, transparent 70%)`,
-            opacity: spotlight.opacity,
+            background: `radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), ${glowColor}, transparent 70%)`,
+            opacity: "var(--mo, 0)",
           }}
         />
       )}

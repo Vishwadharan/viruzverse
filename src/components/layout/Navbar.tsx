@@ -56,7 +56,7 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full bg-[#090912]/85 backdrop-blur-2xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-300">
+          <nav className="flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full bg-[#090912]/90 backdrop-blur-md border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-200">
             {/* ── Brand Logo ── */}
             <Link
               href="/"
@@ -78,6 +78,7 @@ export default function Navbar() {
                   <Link
                     key={href}
                     href={href}
+                    prefetch={true}
                     className={`relative px-2.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-mono tracking-wide rounded-full transition-all duration-200 ${
                       isActive
                         ? "text-white bg-violet-600/30 border border-violet-500/50 shadow-[0_0_12px_rgba(167,139,250,0.35)] font-semibold"
