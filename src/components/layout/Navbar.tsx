@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import ViruzverseLogo from "../ui/ViruzverseLogo";
 import ThemeToggle from "../theme/ThemeToggle";
+import { useTheme } from "../theme/ThemeProvider";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -19,6 +20,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,12 +31,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile drawer on route change
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -49,25 +50,32 @@ export default function Navbar() {
     <>
       <header
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "py-2.5 sm:py-3"
-            : "py-3.5 sm:py-4"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${scrolled ? "py-2.5 sm:py-3" : "py-3.5 sm:py-4"
+          }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full bg-[#090912]/90 backdrop-blur-md border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.7)] transition-all duration-200">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <nav
+            className={`flex items-center justify-between gap-2 px-3.5 sm:px-6 py-2.5 rounded-full backdrop-blur-md border transition-all duration-200 ${isLight
+                ? "bg-white/90 border-slate-200/90 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
+                : "bg-[#090912]/90 border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.7)]"
+              }`}
+          >
             {/* ── Brand Logo ── */}
             <Link
               href="/"
-              className="flex items-center gap-2 group transition-transform duration-200 active:scale-95"
+              className="flex items-center gap-2 group shrink-0 transition-transform duration-200 active:scale-95"
               aria-label="Viruzverse Home"
             >
-              <ViruzverseLogo size={30} />
+              <ViruzverseLogo size={28} />
             </Link>
 
             {/* ── Desktop Nav Links ── */}
-            <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/[0.03] border border-white/5">
+            <div
+              className={`hidden md:flex items-center gap-1 p-1 rounded-full border ${isLight
+                  ? "bg-slate-100/80 border-slate-200/80"
+                  : "bg-white/[0.03] border-white/5"
+                }`}
+            >
               {NAV_LINKS.map(({ href, label }) => {
                 const isActive =
                   href === "/"
@@ -79,11 +87,14 @@ export default function Navbar() {
                     key={href}
                     href={href}
                     prefetch={true}
-                    className={`relative px-2.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-mono tracking-wide rounded-full transition-all duration-200 ${
-                      isActive
-                        ? "text-white bg-violet-600/30 border border-violet-500/50 shadow-[0_0_12px_rgba(167,139,250,0.35)] font-semibold"
-                        : "text-slate-400 hover:text-white hover:bg-white/[0.06]"
-                    }`}
+                    className={`relative px-2.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-mono tracking-wide rounded-full whitespace-nowrap transition-all duration-200 ${isActive
+                        ? isLight
+                          ? "bg-violet-600 text-white shadow-sm font-semibold"
+                          : "text-white bg-violet-600/30 border border-violet-500/50 shadow-[0_0_12px_rgba(167,139,250,0.35)] font-semibold"
+                        : isLight
+                          ? "text-slate-600 hover:text-slate-950 hover:bg-white"
+                          : "text-slate-400 hover:text-white hover:bg-white/[0.06]"
+                      }`}
                   >
                     {label}
                   </Link>
@@ -92,12 +103,12 @@ export default function Navbar() {
             </div>
 
             {/* ── Desktop Actions (Theme Toggle & CTA) ── */}
-            <div className="hidden md:flex items-center gap-2.5">
+            <div className="hidden md:flex items-center gap-2.5 shrink-0">
               <ThemeToggle />
               <Link
                 id="navbar-connect-btn"
                 href="/contact"
-                className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 border border-violet-400/30 shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all duration-200 active:scale-95 overflow-hidden"
+                className="group relative inline-flex items-center gap-2 px-3.5 lg:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 border border-violet-400/30 shadow-[0_0_20px_rgba(124,58,237,0.35)] transition-all duration-200 active:scale-95 whitespace-nowrap"
               >
                 <span className="relative z-10">Connect With Us</span>
                 <ArrowRight
@@ -108,7 +119,7 @@ export default function Navbar() {
             </div>
 
             {/* ── Mobile Actions (Theme Toggle & Hamburger) ── */}
-            <div className="flex items-center gap-2 md:hidden">
+            <div className="flex items-center gap-2 md:hidden shrink-0">
               <ThemeToggle />
               <button
                 id="navbar-mobile-trigger"
@@ -116,7 +127,10 @@ export default function Navbar() {
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
-                className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.05] flex items-center justify-center text-slate-200 transition-all duration-200 active:scale-95"
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 active:scale-95 ${isLight
+                    ? "border-slate-200 bg-slate-100 text-slate-800"
+                    : "border-white/10 bg-white/[0.05] text-slate-200"
+                  }`}
               >
                 {isOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -128,15 +142,18 @@ export default function Navbar() {
       {/* ── Mobile Navigation Drawer ── */}
       {isOpen && (
         <div className="fixed inset-0 z-40 md:hidden animate-fade-in">
-          {/* Overlay backdrop */}
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Drawer content */}
-          <div className="fixed top-[65px] left-0 right-0 bottom-0 bg-[#090912] border-t border-white/10 flex flex-col p-6 overflow-y-auto">
+          <div
+            className={`fixed top-[68px] left-0 right-0 bottom-0 border-t flex flex-col p-6 overflow-y-auto ${isLight
+                ? "bg-white/95 border-slate-200 text-slate-900"
+                : "bg-[#090912] border-white/10 text-slate-100"
+              }`}
+          >
             <div className="flex flex-col gap-2">
               <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-1 px-3">
                 Navigation
@@ -151,12 +168,16 @@ export default function Navbar() {
                   <Link
                     key={href}
                     href={href}
+                    prefetch={true}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all ${
-                      isActive
-                        ? "text-violet-300 bg-violet-950/40 border border-violet-500/30 font-semibold"
-                        : "text-slate-300 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all ${isActive
+                        ? isLight
+                          ? "text-violet-700 bg-violet-50 border border-violet-200 font-semibold"
+                          : "text-violet-300 bg-violet-950/40 border border-violet-500/30 font-semibold"
+                        : isLight
+                          ? "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+                          : "text-slate-300 hover:text-white hover:bg-white/[0.05]"
+                      }`}
                   >
                     <span>{label}</span>
                     <ArrowRight size={16} className="opacity-40" />
@@ -175,7 +196,7 @@ export default function Navbar() {
                 <ArrowRight size={16} />
               </Link>
               <p className="text-center text-xs text-slate-500 font-mono">
-                Coimbatore · Innovation that Flows.
+                · Innovation that Flows.
               </p>
             </div>
           </div>

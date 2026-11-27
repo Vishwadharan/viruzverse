@@ -283,17 +283,20 @@ html:not(.dark) .text-emerald-400 {
 /* Light surfaces & borders */
 html:not(.dark) .bg-\[\#06060a\],
 html:not(.dark) .bg-\[\#090912\],
+html:not(.dark) .bg-\[\#090912\]\/95,
+html:not(.dark) .bg-\[\#090912\]\/90,
 html:not(.dark) .bg-\[\#090912\]\/85,
 html:not(.dark) .bg-\[\#090912\]\/80,
 html:not(.dark) .bg-\[\#090912\]\/70,
 html:not(.dark) .bg-\[\#0d0d17\],
+html:not(.dark) .bg-\[\#0d0d17\]\/95,
 html:not(.dark) .bg-\[\#0d0d17\]\/90,
 html:not(.dark) .bg-\[\#0d0d17\]\/80,
 html:not(.dark) .bg-\[\#0d0f17\],
 html:not(.dark) .bg-\[\#0b0d14\],
 html:not(.dark) .bg-\[\#08090e\],
 html:not(.dark) .bg-\[\#0d0d1a\] {
-  background-color: rgba(255, 255, 255, 0.88);
+  background-color: rgba(255, 255, 255, 0.92);
 }
 
 html:not(.dark) .bg-black\/40 {
