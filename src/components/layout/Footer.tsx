@@ -148,13 +148,13 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-          <p>
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-slate-400">
+          <p className="leading-relaxed">
             © {new Date().getFullYear()} Viruzverse Solutions Private Limited · Innovation that Flows.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="inline-flex items-center gap-2 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            <span>All Systems Operational</span>
+            <span className="font-medium">All Systems Operational</span>
           </div>
         </div>
       </div>

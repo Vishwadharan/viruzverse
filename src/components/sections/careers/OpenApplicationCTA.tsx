@@ -12,6 +12,7 @@ export default function OpenApplicationCTA() {
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [loadedAt] = useState(() => Date.now());
   const [form, setForm] = useState({ name: "", email: "", portfolio: "", note: "" });
 
   const handleCopyEmail = () => {
@@ -28,7 +29,7 @@ export default function OpenApplicationCTA() {
       const res = await fetch("/api/careers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, loadedAt }),
       });
       if (!res.ok) throw new Error("Failed");
       setSubmitted(true);

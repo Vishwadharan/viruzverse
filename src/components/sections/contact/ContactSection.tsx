@@ -18,6 +18,7 @@ const INQUIRY_TYPES = [
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [state, setState] = useState<FormState>("idle");
+  const [loadedAt] = useState(() => Date.now());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -30,7 +31,7 @@ export default function ContactSection() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, loadedAt }),
       });
       if (!res.ok) throw new Error("Submission failed");
       setState("success");

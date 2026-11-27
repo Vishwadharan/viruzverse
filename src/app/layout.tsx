@@ -13,6 +13,11 @@ import {
   SITE_DESCRIPTION,
   SITE_OG_IMAGE,
   SITE_KEYWORDS,
+  COMPANY_ADDRESS,
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  LINKEDIN_URL,
+  INSTAGRAM_URL,
 } from '@/lib/constants';
 
 const geistSans = localFont({
@@ -78,10 +83,34 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Viruzverse Solutions Private Limited",
+    alternateName: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    email: CONTACT_EMAIL,
+    telephone: CONTACT_PHONE,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: COMPANY_ADDRESS,
+      addressLocality: "Coimbatore",
+      addressRegion: "Tamil Nadu",
+      postalCode: "641038",
+      addressCountry: "IN",
+    },
+    sameAs: [LINKEDIN_URL, INSTAGRAM_URL],
+  };
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${mokoto.variable}`} suppressHydrationWarning>
       <head>
         <ThemeScript />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body className="font-sans bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased transition-colors duration-200 relative">
         <ThemeProvider>

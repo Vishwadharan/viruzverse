@@ -5,15 +5,21 @@ import {
   Globe,
   TrendingUp,
 } from "lucide-react";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { SITE_NAME, SITE_OG_IMAGE, SITE_URL } from "@/lib/constants";
 import TiltCard3D from "@/components/ui/TiltCard3D";
 import Magnetic3DButton from "@/components/ui/Magnetic3DButton";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services — B2B & B2C Solutions",
   description: `${SITE_NAME} solves B2B & B2C business problems using emerging technologies and offers a free consultation for business owners.`,
   alternates: { canonical: `${SITE_URL}/services` },
+  openGraph: {
+    url: `${SITE_URL}/services`,
+    title: `Services — B2B & B2C Solutions | ${SITE_NAME}`,
+    description: `${SITE_NAME} solves B2B & B2C business problems using emerging technologies with a free consultation for business owners.`,
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+  },
 };
 
 const SOLUTIONS = [

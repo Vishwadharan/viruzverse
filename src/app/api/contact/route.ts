@@ -6,11 +6,25 @@ import {
   SITE_URL,
   WHATSAPP_URL,
 } from "@/lib/constants";
-import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import {
+  checkRateLimit,
+  getClientIp,
+  isAllowedOrigin,
+  isTooFastSubmission,
+} from "@/lib/rateLimit";
 import { escapeHtml, isValidEmail, sendZeptoEmail } from "@/lib/zeptomail";
 
 export async function POST(req: Request) {
   try {
+    if (!isAllowedOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+    }
+
+    const contentLength = Number(req.headers.get("content-length") || 0);
+    if (contentLength > 16384) {
+      return NextResponse.json({ error: "Payload too large." }, { status: 413 });
+    }
+
     const ip = getClientIp(req);
     if (!checkRateLimit(ip, 5, 10 * 60 * 1000)) {
       return NextResponse.json(
@@ -21,8 +35,8 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    // Honeypot check: silently succeed for bots without sending email
-    if (body?.website) {
+    // Honeypot & time-trap check: silently succeed for bots without sending email
+    if (body?.website || isTooFastSubmission(body?.loadedAt)) {
       return NextResponse.json({ ok: true });
     }
 
